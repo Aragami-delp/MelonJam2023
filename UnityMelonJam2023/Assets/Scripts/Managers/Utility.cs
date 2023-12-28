@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public static class Utility
 {
@@ -14,17 +15,12 @@ public static class Utility
     {
         camera = camera ?? Camera.main;
         return camera.ScreenToWorldPoint(
-            new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+            new Vector3(Mouse.current.position.value.x, Mouse.current.position.value.y, 0f));
     }
 
     public static Vector3 ToVector3(this Vector2 vec2)
     {
         return new Vector3(vec2.x, vec2.y, 0f);
-    }
-
-    public static Vector2 GetInputDirection()
-    {
-        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
     }
 
     public static Vector3 GetVectorFromAngle(float angle)
