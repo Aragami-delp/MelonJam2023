@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Movement2D : MonoBehaviour
@@ -11,19 +12,24 @@ public class Movement2D : MonoBehaviour
     private Camera _viewCamera;
     private Vector2 _velocity;
 
+    [HideInInspector] public Vector2 MovePlayerInput;
+    [HideInInspector] public Vector2 AimDirPlayerInput;
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _viewCamera = _viewCamera ?? Camera.main;
+
+        this.AddComponent<PlayerInputMessages>();
     }
 
     private void Update()
     {
-        Vector3 mousePos = Utility.GetMousePos(_viewCamera);
-        transform.right = mousePos - transform.position;
-        _velocity = Utility.GetInputDirection() * _moveSpeed;
+        Vector3 aimDir = AimDirPlayerInput;
+        transform.right = aimDir - transform.position;
+        _velocity = MovePlayerInput * _moveSpeed;
 
-        _fieldOfView?.SetAimDirection(mousePos - this.transform.position);
+        if (aimDir.x != 0 && aimDir.y != 0) { _fieldOfView?.SetAimDirection(aimDir); }
         _fieldOfView?.SetOrigin(this.transform.position);
     }
 
