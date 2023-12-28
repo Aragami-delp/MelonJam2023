@@ -6,9 +6,12 @@ using UnityEngine.InputSystem;
 public class PlayerInputMessages : MonoBehaviour
 {
     private Movement2D _movement;
+    private Camera _camera;
+
     private void Awake()
     {
         _movement = GetComponent<Movement2D>();
+        _camera = Camera.main;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -20,7 +23,7 @@ public class PlayerInputMessages : MonoBehaviour
     {
         if (context.control.device is Mouse)
         {
-            _movement.AimDirPlayerInput = Utility.GetMousePos().ToVector3() - _movement.transform.position;
+            _movement.AimDirPlayerInput = Utility.GetMousePos3(_camera) - _movement.transform.position;
         }
         else
         {
