@@ -13,7 +13,7 @@ public class PlayerInputMessages : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        _movement.MovePlayerInput = context.ReadValue<Vector2>().normalized;
+        _movement.MovePlayerInput = context.ReadValue<Vector2>();
     }
 
     public void Aim(InputAction.CallbackContext context)
