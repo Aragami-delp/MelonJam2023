@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
+  - Obstacle
   - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Assistant
+  - Target
   - 
   - 
   - 
