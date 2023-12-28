@@ -11,7 +11,19 @@ public static class Utility
     /// </summary>
     /// <param name="camera">Main camera as parameter since its expensive to call main camera</param>
     /// <returns></returns>
-    public static Vector2 GetMousePos(Camera camera = null)
+    public static Vector2 GetMousePos2(Camera camera = null)
+    {
+        camera = camera ?? Camera.main;
+        return camera.ScreenToWorldPoint(
+            new Vector2(Mouse.current.position.value.x, Mouse.current.position.value.y));
+    }
+
+    /// <summary>
+    /// Gets 2D mouse position in world
+    /// </summary>
+    /// <param name="camera">Main camera as parameter since its expensive to call main camera</param>
+    /// <returns></returns>
+    public static Vector3 GetMousePos3(Camera camera = null)
     {
         camera = camera ?? Camera.main;
         return camera.ScreenToWorldPoint(
