@@ -14,15 +14,25 @@ public class A_StarDebugg : MonoBehaviour
     [SerializeField]
     Transform startPos, endPos;
 
+    List<NodeBase> oldNodes = new List<NodeBase>();
     void Start()
     {
-        List<NodeBase> nodes = Pathfinding.GetPath(startPos.position,endPos.position);
-
-        foreach (NodeBase node in nodes)
-        {
-            wall.SetTile((Vector3Int)node.OldPosition,DebuggTile);
-        }
-
+        ShowPath();
     }
 
+    [ContextMenu("Test Show path")]
+    public void ShowPath() 
+    {
+        foreach (var oldNodes in oldNodes)
+        {
+            wall.SetTile((Vector3Int)oldNodes.OldPosition,null);
+        }
+
+        List<NodeBase> nodes = Pathfinding.GetPath(startPos.position, endPos.position);
+        oldNodes = nodes;
+        foreach (NodeBase node in nodes)
+        {
+            wall.SetTile((Vector3Int)node.OldPosition, DebuggTile);
+        }
+    }
 }

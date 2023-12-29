@@ -17,6 +17,8 @@ public class Pathfinding : MonoBehaviour
 
     Vector2Int offset;
 
+    [SerializeField]
+    TileBase DEBUGG_TILE;
     private void Awake()
     {
         Instance = this;
@@ -39,7 +41,9 @@ public class Pathfinding : MonoBehaviour
         NodeBase = new NodeBase[bounds.size.x, bounds.size.y];
 
         offset = new Vector2Int(Mathf.Abs(bounds.xMin), Mathf.Abs(bounds.yMin));
+        
 
+        
         for (int x = 0; x < bounds.size.x; x++)
         {
             for (int y = 0; y < bounds.size.y; y++)
@@ -47,16 +51,22 @@ public class Pathfinding : MonoBehaviour
                 NodeBase newNode = new NodeBase();
                 newNode.Position = new Vector2Int(x, y);
                 newNode.OldPosition = newNode.Position - offset;
-
-                if (!wallTilemap.HasTile((Vector3Int)newNode.OldPosition))
-
-                    NodeBase[x, y] = newNode;
+                newNode.CanWalkOver = !wallTilemap.HasTile((Vector3Int)newNode.OldPosition);
+                NodeBase[x, y] = newNode;
             }
         }
     }
+
+
     // TODO: Work in progress
     public List<NodeBase> FindPath(Vector3 startPos, Vector3 endPos) 
     {
+
+        if (!PositionInPathfinding(startPos) || !PositionInPathfinding(endPos)) 
+        {
+            return new List<NodeBase>();
+        }
+
         NodeBase startNode = PositionToNodeBase(startPos);
         NodeBase endNode = PositionToNodeBase(endPos);
 
@@ -111,7 +121,7 @@ public class Pathfinding : MonoBehaviour
         }
 
         // checked all nodes. no path found
-        return null;
+        return new List<NodeBase>();
     }
 
     public static List<NodeBase> GetPath(Vector3 startPos, Vector3 endPos) 
@@ -124,27 +134,39 @@ public class Pathfinding : MonoBehaviour
         if (current.Position.x -1 >= 0) 
         {
             //left
-            nodes.Add(GetNode(current.Position.x - 1, current.Position.y));
+            CheckNeighbour(nodes, current.Position.x - 1, current.Position.y);
+
             // Left Down
-            if (current.Position.y - 1 >= 0) nodes.Add(GetNode(current.Position.x-1, current.Position.y -1));
+            if (current.Position.y - 1 >= 0) 
+            {
+                CheckNeighbour(nodes, current.Position.x - 1, current.Position.y-1);
+            }
             // Left up
-            if (current.Position.y + 1 >= GetHight()) nodes.Add(GetNode(current.Position.x - 1, current.Position.y + 1));
+            if (current.Position.y + 1 < GetHight()) CheckNeighbour(nodes, current.Position.x - 1, current.Position.y + 1);
         }
         if (current.Position.x +1 < GetWith()) 
         {
             // right
             int newX = current.Position.x + 1;
-            nodes.Add(GetNode(newX, current.Position.y));
+            CheckNeighbour(nodes, newX, current.Position.y);
             // right down
-            if (current.Position.y - 1 >= 0) nodes.Add(GetNode(newX,current.Position.y -1));
+            if (current.Position.y - 1 >= 0) CheckNeighbour(nodes, newX, current.Position.y -1);
             // right up
-            if (current.Position.y + 1 < GetHight()) nodes.Add(GetNode(newX,current.Position.y +1));
+            if (current.Position.y + 1 < GetHight()) CheckNeighbour(nodes, newX, current.Position.y + 1);
         }
         // down
-        if (current.Position.y - 1 >= 0) nodes.Add(GetNode(current.Position.x,current.Position.y -1));
+        if (current.Position.y - 1 >= 0) CheckNeighbour(nodes, current.Position.x, current.Position.y - 1);
         // up
-        if (current.Position.y + 1 < GetHight()) nodes.Add(GetNode(current.Position.x,current.Position.y +1));
+        if (current.Position.y + 1 < GetHight()) CheckNeighbour(nodes, current.Position.x, current.Position.y + 1);
         return nodes;
+    }
+    private void CheckNeighbour(List<NodeBase> ListToAdd, int x, int y) 
+    {
+        NodeBase left = GetNode(x, y);
+        if (left.CanWalkOver)
+        {
+            ListToAdd.Add(left);
+        }
     }
     private List<NodeBase> CalculatePath(NodeBase endNode)
     {
@@ -167,7 +189,8 @@ public class Pathfinding : MonoBehaviour
         int xDis = Mathf.Abs(start.Position.x - end.Position.x);
         int yDis = Mathf.Abs(start.Position.y - end.Position.y);
 
-        int remaining = Mathf.Abs(xDis - yDis);
+        int remaining = Mathf.Abs(xDis - yDis);  
+
         return moveDiagonalCost * Mathf.Min(xDis,yDis) + moveCost * remaining;
     }
     public int Distance(NodeBase start, NodeBase end)
@@ -188,6 +211,19 @@ public class Pathfinding : MonoBehaviour
         return NodeBase[newX,newY];
     }
 
+    public bool PositionInPathfinding(Vector3 pos) 
+    {
+        Vector2Int posV2 = (Vector2Int)wallTilemap.WorldToCell(pos);
+        int newX = posV2.x + offset.x;
+        int newY = posV2.y + offset.y;
+
+        if (GetWith() > newX && GetHight() > newY) 
+        {
+            return true;
+        }
+
+        return false;
+    }
     private NodeBase GetLowestFCostNode(List<NodeBase> nodeList) 
     {
         NodeBase lowest = nodeList[0];
