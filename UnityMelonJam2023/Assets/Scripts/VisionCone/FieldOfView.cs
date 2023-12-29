@@ -10,11 +10,12 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] int _rayCount = 50;
     [SerializeField] private LayerMask _layerMask;
     private Mesh _mesh;
-    private Vector3 _origin = Vector3.zero;
+    private Vector3 _origin { get; set; }
     private float _startingAngle;
 
     private void Start()
     {
+        transform.position = Vector3.zero;
         _mesh = new();
         GetComponent<MeshFilter>().mesh = _mesh;
     }
@@ -36,6 +37,8 @@ public class FieldOfView : MonoBehaviour
         {
             Vector3 vertex;
             RaycastHit2D raycastHit2D = Physics2D.Raycast(_origin, Utility.GetVectorFromAngle(angle), _viewDistance, _layerMask);
+
+
             if (raycastHit2D.collider == null)
             {
                 vertex = _origin + Utility.GetVectorFromAngle(angle) * _viewDistance;
@@ -44,6 +47,7 @@ public class FieldOfView : MonoBehaviour
             {
                 vertex = raycastHit2D.point;
             }
+
             vertices[vertexIndex] = vertex;
 
             if (i > 0)
@@ -67,6 +71,7 @@ public class FieldOfView : MonoBehaviour
     public void SetOrigin(Vector3 origin)
     {
         this._origin = origin;
+
     }
 
     public void SetAimDirection(Vector3 aimDirection)
