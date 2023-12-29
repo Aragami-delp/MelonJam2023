@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 7549772055230951971}
   m_Layer: 10
   m_Name: TestPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,6 +423,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: bb78dbed-6a7b-4a26-9857-6071e8c61218
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6052249566802108554}
+        m_TargetAssemblyTypeName: PlayerInputMessages, Assembly-CSharp
+        m_MethodName: SecondInteraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e434eb59-5207-4138-a6b9-4255054d63c2
+    m_ActionName: Player/SecondInteraction[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -456,6 +472,9 @@ MonoBehaviour:
   _interactionLayers:
     serializedVersion: 2
     m_Bits: 32768
+  _interaction2Layers:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!95 &7549772055230951971
 Animator:
   serializedVersion: 5

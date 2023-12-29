@@ -21,6 +21,8 @@ public class DeamonScript : MonoBehaviour
 
     private Vector3? _nextPos = null;
 
+    private Vector3? _mouseClick = null;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,7 @@ public class DeamonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _fieldOfView?.SetOrigin(this.transform.position);
+        //_fieldOfView?.SetOrigin(this.transform.position);
 
         if(_nextPos != null)
         {
@@ -50,11 +52,17 @@ public class DeamonScript : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("Pos: " + Utility.GetMousePos3());
 
-            _path = Pathfinding.GetPath(this.transform.position, Utility.GetMousePos3());
+            var mousclick = Utility.GetMousePos3();
 
-            Debug.Log("Test: " + _path.Count);
+            _path = Pathfinding.GetPath(this.transform.position, mousclick);
+
+            if (_path.Count != 0)
+            {
+                _mouseClick = mousclick;
+                _path.RemoveAt(0);
+            }
+            
 
             SetNextPos();
         }
@@ -62,16 +70,26 @@ public class DeamonScript : MonoBehaviour
 
     private void SetNextPos()
     {
-        if (_path.Count > 0)
+        if (_path.Count > 1)
         {
-
             _nextPos = wallTileMap.CellToWorld((Vector3Int)_path[0].OldPosition);
-            Debug.Log("Current Pos:" + this.transform.position  +"_nextPos: " + _nextPos);
             _path.RemoveAt(0);
-        } else
+        } 
+        else
         {
-            _nextPos = null;
-            Debug.Log("Am ziel: " + _nextPos);
+            if(_mouseClick == null)
+            {
+                _nextPos = null;
+            } else
+            {
+                if (_path.Count != 0)
+                { 
+                    _path.RemoveAt(0);
+                }
+
+                _nextPos = new Vector3(_mouseClick.Value.x, _mouseClick.Value.y, 0);
+                _mouseClick = null;
+            }
         }
     }
 }

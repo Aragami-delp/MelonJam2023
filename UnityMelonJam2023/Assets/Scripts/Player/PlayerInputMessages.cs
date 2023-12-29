@@ -37,7 +37,15 @@ public class PlayerInputMessages : MonoBehaviour
     {
         if (context.started)
         {
-            _interaction.UseInteract();
+            _interaction?.UseInteract(0);
+        }
+    }
+
+    public void SecondInteraction(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _interaction?.UseInteract(1);
         }
     }
 }

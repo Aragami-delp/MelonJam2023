@@ -57,7 +57,10 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-
+    public static void ChangeTileWalkable(Vector3 TileWorldPos, bool should) 
+    {
+        Instance.PositionToNodeBase(TileWorldPos).CanWalkOver = should;
+    }
     // TODO: Work in progress
     public List<NodeBase> FindPath(Vector3 startPos, Vector3 endPos) 
     {
@@ -173,6 +176,7 @@ public class Pathfinding : MonoBehaviour
         List<NodeBase> path = new();
 
         NodeBase currentNode = endNode;
+        path.Add(currentNode);
 
         while (currentNode.PreviousNode != null)
         {
@@ -217,7 +221,7 @@ public class Pathfinding : MonoBehaviour
         int newX = posV2.x + offset.x;
         int newY = posV2.y + offset.y;
 
-        if (GetWith() > newX && GetHight() > newY) 
+        if ((GetWith() > newX && GetHight() > newY) && GetNode(newX,newY).CanWalkOver) 
         {
             return true;
         }
