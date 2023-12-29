@@ -26,7 +26,6 @@ public class DoorControlls : MonoInteractionTarget
         Transform rightDoorChild = transform.GetChild(1);
         rightDoor = new DoorPos(rightDoorChild.position, GetTargetPos(rightDoorChild), rightDoorChild);
 
-        SetDoorWalkable(false);
 
         if (startOpen) 
         {
@@ -39,6 +38,7 @@ public class DoorControlls : MonoInteractionTarget
         }
         else 
         {
+            SetDoorWalkable(false);
             GetComponent<CircleCollider2D>().enabled = false;
         }
     }
@@ -114,7 +114,6 @@ public class DoorControlls : MonoInteractionTarget
             doLerp = true;
             openDoor = true;
             time = 0f;
-            SetDoorWalkable(true);
         }
     }
     [ContextMenu("CloseDoor")]
@@ -126,8 +125,6 @@ public class DoorControlls : MonoInteractionTarget
             doLerp = true;
             openDoor = false;
             time = 0f;
-
-            SetDoorWalkable(false);
         }
     }
 

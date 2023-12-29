@@ -221,7 +221,7 @@ public class Pathfinding : MonoBehaviour
         int newX = posV2.x + offset.x;
         int newY = posV2.y + offset.y;
 
-        if (GetWith() > newX && GetHight() > newY) 
+        if ((GetWith() > newX && GetHight() > newY) && GetNode(newX,newY).CanWalkOver) 
         {
             return true;
         }
