@@ -63,7 +63,8 @@ public class Movement2D : MonoBehaviour
             }
             else
             {
-                // down walk anim
+                _animator.SetInteger("VerticalWalk", -1);
+                _animator.speed = 2;
             }
         }
         else
