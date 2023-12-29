@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(10)]
 public class Lever : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject _leverUp, _leverDown;
 
     [SerializeField] private bool startStatus = false;
 
-    [SerializeField, SerializeReference] private IInteractionTarget _target;
+    [SerializeField] private MonoInteractionTarget _target;
     private bool _status;
     public bool Status
     {
@@ -27,6 +28,7 @@ public class Lever : MonoBehaviour, IInteractable
                 _leverUp.SetActive(false); _leverDown.SetActive(true);
             }
             _status = value;
+            _target.DoStuff(value);
         }
     }
 

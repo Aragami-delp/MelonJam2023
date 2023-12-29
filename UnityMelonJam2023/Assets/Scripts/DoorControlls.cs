@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DoorControlls : MonoBehaviour, IInteractionTarget
+public class DoorControlls : MonoInteractionTarget
 {
     [SerializeField]
     bool startOpen;
@@ -100,7 +100,8 @@ public class DoorControlls : MonoBehaviour, IInteractionTarget
     [ContextMenu("OpenDoor")]
     public void OpenDoor() 
     {
-        if (leftDoor.Child.position != leftDoor.EndPos && !openDoor && !doLerp) 
+        //if (leftDoor.Child.position != leftDoor.EndPos && !openDoor && !doLerp) 
+        if (openDoor) return;
         {
             doLerp = true;
             openDoor = true;
@@ -110,7 +111,8 @@ public class DoorControlls : MonoBehaviour, IInteractionTarget
     [ContextMenu("CloseDoor")]
     public void CloseDoor() 
     {
-        if (leftDoor.Child.position != leftDoor.StartPos && openDoor && !doLerp) 
+        //if (leftDoor.Child.position != leftDoor.StartPos && openDoor && !doLerp) 
+        if (!openDoor) return;
         {
             doLerp = true;
             openDoor = false;
@@ -123,7 +125,7 @@ public class DoorControlls : MonoBehaviour, IInteractionTarget
             return child.transform.position + child.transform.right * openAmmount.x + child.transform.right * openAmmount.y;
     }
 
-    public void DoStuff(bool _condition)
+    public override void DoStuff(bool _condition)
     {
         if(_condition)
         {
