@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerInputMessages : MonoBehaviour
 {
     private Movement2D _movement;
+    private PlayerInteraction _interaction;
     private Camera _camera;
 
     private void Awake()
     {
         _movement = GetComponent<Movement2D>();
+        _interaction = GetComponent<PlayerInteraction>();
         _camera = Camera.main;
     }
 
@@ -28,6 +30,14 @@ public class PlayerInputMessages : MonoBehaviour
         else
         {
             _movement.AimDirPlayerInput = context.ReadValue<Vector2>().normalized;
+        }
+    }
+
+    public void Fire(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _interaction.UseInteract();
         }
     }
 }

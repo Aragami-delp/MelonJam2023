@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 7602595467292307003}
   - component: {fileID: 6733538410875624356}
   - component: {fileID: 6052249566802108554}
+  - component: {fileID: 8731584468846427952}
   m_Layer: 10
   m_Name: TestPlayer
   m_TagString: Untagged
@@ -360,7 +361,19 @@ MonoBehaviour:
     m_ActionId: bf1a521a-0015-4dbe-8b8f-bdfa9dc090c8
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6052249566802108554}
+        m_TargetAssemblyTypeName: PlayerInputMessages, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 44edd486-f138-4738-b4dd-4d17fba58f27
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -420,6 +433,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca9e918c064eab48b3b9f66ea74ef94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8731584468846427952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282152660333145825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd5985885a5454eb7f6fd43bd350f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionCricleRadius: 5
+  _interactionLayers:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!1 &7015557493596797367
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,5 +480,5 @@ Transform:
   - {fileID: 7922654646376855547}
   - {fileID: 4098298719582451981}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

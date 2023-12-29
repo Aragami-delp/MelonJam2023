@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DoorControlls : MonoBehaviour
+public class DoorControlls : MonoBehaviour, IInteractionTarget
 {
     [SerializeField]
-    bool startOpen,proximityOpen;
+    bool startOpen;
+    [SerializeField]
+    bool proximityOpen;
     [SerializeField]
     float proximityRange;
 
@@ -119,6 +121,18 @@ public class DoorControlls : MonoBehaviour
     private Vector3 GetTargetPos(Transform child) 
     {
             return child.transform.position + child.transform.right * openAmmount.x + child.transform.right * openAmmount.y;
+    }
+
+    public void DoStuff(bool _condition)
+    {
+        if(_condition)
+        {
+            OpenDoor();
+        }
+        else
+        {
+            CloseDoor();
+        }
     }
 
     private struct DoorPos 

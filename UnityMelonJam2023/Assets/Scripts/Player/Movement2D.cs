@@ -21,8 +21,6 @@ public class Movement2D : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _viewCamera = _viewCamera ?? Camera.main;
 
-        _fieldOfView?.SetOrigin(this.transform.position/*this.transform.position*/);
-
         this.AddComponent<PlayerInputMessages>();
     }
 
