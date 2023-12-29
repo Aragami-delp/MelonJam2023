@@ -155,13 +155,7 @@ public class DoorControllsEditor : Editor
 
         DrawDefaultInspector();
 
-        if (!proximityOpenProperty.boolValue)
-        {
-            SerializedProperty property = serializedObject.FindProperty("proximityRange");
 
-            Rect rect = EditorGUILayout.GetControlRect(false, 0);
-            property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, GUIContent.none);
-        }
 
         serializedObject.ApplyModifiedProperties();
     }
