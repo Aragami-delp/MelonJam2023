@@ -26,6 +26,8 @@ public class DoorControlls : MonoInteractionTarget
         Transform rightDoorChild = transform.GetChild(1);
         rightDoor = new DoorPos(rightDoorChild.position, GetTargetPos(rightDoorChild), rightDoorChild);
 
+        SetDoorWalkable(false);
+
         if (startOpen) 
         {
             OpenDoor();
@@ -62,6 +64,11 @@ public class DoorControlls : MonoInteractionTarget
         }
     }
 
+    private void SetDoorWalkable(bool should) 
+    {
+        Pathfinding.ChangeTileWalkable(transform.position - transform.up * 0.5f, should);
+        Pathfinding.ChangeTileWalkable(transform.position + transform.right * 1.5f - transform.up * 0.5f, should);
+    }
     float time = 0f;
     private void Update()
     {
@@ -93,47 +100,71 @@ public class DoorControlls : MonoInteractionTarget
 
             if (time >= 1f) 
             {
+
                 doLerp = false;
             }
         }
     }
     [ContextMenu("OpenDoor")]
+
     public void OpenDoor() 
     {
-        //if (leftDoor.Child.position != leftDoor.EndPos && !openDoor && !doLerp) 
-        if (openDoor) return;
+        if (leftDoor.Child.position != leftDoor.EndPos && !openDoor && !doLerp) 
         {
             doLerp = true;
             openDoor = true;
             time = 0f;
+            SetDoorWalkable(true);
         }
     }
     [ContextMenu("CloseDoor")]
+
     public void CloseDoor() 
     {
-        //if (leftDoor.Child.position != leftDoor.StartPos && openDoor && !doLerp) 
-        if (!openDoor) return;
+        if (leftDoor.Child.position != leftDoor.StartPos && openDoor && !doLerp) 
         {
             doLerp = true;
             openDoor = false;
             time = 0f;
+
+            SetDoorWalkable(false);
         }
+    }
+
+    public void ForceDoorOpen() 
+    {
+        if (openDoor) return;
+       
+        doLerp = true;
+        openDoor = true;
+        time = 0f;
+        SetDoorWalkable(true);
+    }
+
+    public void ForceDoorClose() 
+    {
+        if (!openDoor) return;
+
+        doLerp = true;
+        openDoor = false;
+        time = 0f;
+        SetDoorWalkable(false);
     }
 
     private Vector3 GetTargetPos(Transform child) 
     {
-            return child.transform.position + child.transform.right * openAmmount.x + child.transform.right * openAmmount.y;
+       return child.transform.position + child.transform.right * openAmmount.x + child.transform.right * openAmmount.y;
     }
-
+    
     public override void DoStuff(bool _condition)
     {
         if(_condition)
         {
-            OpenDoor();
+            ForceDoorOpen();
         }
         else
         {
-            CloseDoor();
+            ForceDoorClose();
         }
     }
 

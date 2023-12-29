@@ -17,7 +17,7 @@ public class A_StarDebugg : MonoBehaviour
     List<NodeBase> oldNodes = new List<NodeBase>();
     void Start()
     {
-        ShowPath();
+        //ShowPath();
     }
 
     [ContextMenu("Test Show path")]
@@ -34,5 +34,7 @@ public class A_StarDebugg : MonoBehaviour
         {
             wall.SetTile((Vector3Int)node.OldPosition, DebuggTile);
         }
+
+
     }
 }
