@@ -86,8 +86,7 @@ public class DeamonScript : MonoBehaviour
                 { 
                     _path.RemoveAt(0);
                 }
-
-                _nextPos = new Vector3(_mouseClick.Value.x, _mouseClick.Value.y, 0);
+                _nextPos = new Vector3(Mathf.RoundToInt(_mouseClick.Value.x), Mathf.RoundToInt(_mouseClick.Value.y - 0.5f) + 0.5f, 0);
                 _mouseClick = null;
             }
         }
