@@ -33,7 +33,7 @@ public class DeamonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //_fieldOfView?.SetOrigin(this.transform.position);
+        _fieldOfView?.SetOrigin(this.transform.position);
 
         if(_nextPos != null)
         {
