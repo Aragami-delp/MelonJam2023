@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Movement2D : MonoBehaviour
 {
+    public static Movement2D Instance {  get; private set; }
+
     [SerializeField] private float _moveSpeed = 6f;
     [SerializeField] private FieldOfView _fieldOfView;
     [SerializeField] private Transform _rotation;
@@ -25,6 +27,8 @@ public class Movement2D : MonoBehaviour
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
         this.AddComponent<PlayerInputMessages>();
+
+        Instance = this;
     }
 
     private void Update()

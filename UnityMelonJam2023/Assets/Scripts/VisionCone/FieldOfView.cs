@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class FieldOfView : MonoBehaviour
@@ -12,23 +13,39 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private LayerMask _enemiesLayerMask;
     [SerializeField] private bool _hideEnemies = false;
-    private List<SpriteRenderer> _spritesEnemyInView = new();
+    //[SerializeField] private UnityEvent _detectedPlayer;
+    //[SerializeField] private UnityEvent _lostPlayer;
+    private List<SimpleEnemyFOV> _spritesEnemyInView = new();
     private Mesh _mesh;
+    private MeshRenderer _meshRenderer;
     private Vector3 _origin { get; set; }
+
     private float _startingAngle;
+
+    private bool showFOV = true;
+    public bool ShowFOV
+    {
+        get { return showFOV; }
+        set
+        {
+            _meshRenderer.enabled = value;
+            showFOV = value;
+        }
+    }
 
     private void Start()
     {
         transform.position = Vector3.zero;
         _mesh = new();
         GetComponent<MeshFilter>().mesh = _mesh;
+        _meshRenderer = GetComponent<MeshRenderer>();
 
         _spritesEnemyInView.Clear();
     }
 
     private void LateUpdate()
     {
-        List<SpriteRenderer> newSprites = new();
+        List<SimpleEnemyFOV> newSprites = new();
 
         float angle = _startingAngle;
         float angleIncrease = _fov / _rayCount;
@@ -77,7 +94,7 @@ public class FieldOfView : MonoBehaviour
                 RaycastHit2D enemiesRaycastHit2D = Physics2D.Raycast(_origin, vecFromAngle, _viewDistance, _enemiesLayerMask | _layerMask);
                 if (enemiesRaycastHit2D.collider != null)
                 {
-                    if (enemiesRaycastHit2D.transform.TryGetComponent<SpriteRenderer>(out SpriteRenderer enemy))
+                    if (enemiesRaycastHit2D.transform.TryGetComponent<SimpleEnemyFOV>(out SimpleEnemyFOV enemy))
                     {
                         if (enemy.gameObject.layer == LayerMask.NameToLayer("Target"))
                         {
@@ -96,15 +113,15 @@ public class FieldOfView : MonoBehaviour
 
         if (_hideEnemies)
         {
-            foreach (SpriteRenderer item in _spritesEnemyInView.Except(newSprites).ToList())
+            foreach (SimpleEnemyFOV item in _spritesEnemyInView.Except(newSprites).ToList())
             {
                 _spritesEnemyInView.Remove(item);
-                item.enabled = false;
+                item.DisableRenderer();
             }
-            foreach (SpriteRenderer item in newSprites)
+            foreach (SimpleEnemyFOV item in newSprites)
             {
                 _spritesEnemyInView.Add(item);
-                item.enabled = true;
+                item.EnableRenderer();
             }
         }
     }
