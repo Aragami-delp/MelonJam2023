@@ -66,6 +66,8 @@ public class FieldOfView : MonoBehaviour
         _mesh.vertices = vertices;
         _mesh.uv = uv;
         _mesh.triangles = triangles;
+
+        _mesh.RecalculateBounds();
     }
 
     public void SetOrigin(Vector3 origin)
