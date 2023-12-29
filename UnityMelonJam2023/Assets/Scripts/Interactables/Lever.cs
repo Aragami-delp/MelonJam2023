@@ -39,7 +39,6 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log("Lever used");
         Status = !Status;
     }
 }

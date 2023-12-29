@@ -83,6 +83,10 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
+  _enemiesLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  _hideEnemies: 0
 --- !u!33 &2558777402822568448
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111,7 +115,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e565dd9b8ac8ad147b2d434cc8e3755d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
