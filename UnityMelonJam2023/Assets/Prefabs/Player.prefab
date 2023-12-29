@@ -83,14 +83,27 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
+  _hideEnemies: 1
   _enemiesLayerMask:
     serializedVersion: 2
     m_Bits: 4096
-  _hideEnemies: 0
+  _detectPlayerAssistant: 0
+  _assistantLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _detectedPlayer:
     m_PersistentCalls:
       m_Calls: []
+  _detectedAssistant:
+    m_PersistentCalls:
+      m_Calls: []
   _lostPlayer:
+    m_PersistentCalls:
+      m_Calls: []
+  _lostAssistant:
     m_PersistentCalls:
       m_Calls: []
 --- !u!33 &2558777402822568448

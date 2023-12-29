@@ -4,17 +4,33 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FieldOfView : MonoBehaviour
 {
-    [SerializeField] private float _fov = 90f;
+    public enum DETECTIONTYPE
+    {
+        NONE = 0,
+        PLAYER = 1,
+        ASSISTANT = 2,
+    }
+
+    [Header("General"), SerializeField] private float _fov = 90f;
     [SerializeField] private float _viewDistance = 50f;
     [SerializeField] int _rayCount = 50;
     [SerializeField] private LayerMask _layerMask;
+    [Header("Remove Enemy Renderer"), SerializeField] private bool _hideEnemies = false;
     [SerializeField] private LayerMask _enemiesLayerMask;
-    [SerializeField] private bool _hideEnemies = false;
-    //[SerializeField] private UnityEvent _detectedPlayer;
-    //[SerializeField] private UnityEvent _lostPlayer;
+    [Header("Detect Player"), SerializeField, Tooltip("Detect player and assistant")]
+    private bool _detectPlayerAssistant = true;
+    [SerializeField] private LayerMask _assistantLayerMask;
+    [SerializeField] private LayerMask _playerLayerMask;
+    [SerializeField] private UnityEvent<DETECTIONTYPE> _detectedPlayer;
+    [SerializeField] private UnityEvent<DETECTIONTYPE> _lostPlayer;
+
+    private bool _playerCurrentlyDetected = false;
+    private bool _assistantCurrentlyDetected = false;
+
     private List<SimpleEnemyFOV> _spritesEnemyInView = new();
     private Mesh _mesh;
     private MeshRenderer _meshRenderer;
@@ -46,6 +62,8 @@ public class FieldOfView : MonoBehaviour
     private void LateUpdate()
     {
         List<SimpleEnemyFOV> newSprites = new();
+        bool thisUpdatePlayerDetected = false;
+        bool thisUpdateAssistantDetected = false;
 
         float angle = _startingAngle;
         float angleIncrease = _fov / _rayCount;
@@ -94,12 +112,30 @@ public class FieldOfView : MonoBehaviour
                 RaycastHit2D enemiesRaycastHit2D = Physics2D.Raycast(_origin, vecFromAngle, _viewDistance, _enemiesLayerMask | _layerMask);
                 if (enemiesRaycastHit2D.collider != null)
                 {
-                    if (enemiesRaycastHit2D.transform.TryGetComponent<SimpleEnemyFOV>(out SimpleEnemyFOV enemy))
+                    if (enemiesRaycastHit2D.transform.TryGetComponent(out SimpleEnemyFOV enemy))
                     {
-                        if (enemy.gameObject.layer == LayerMask.NameToLayer("Target"))
+                        if (_enemiesLayerMask == (_enemiesLayerMask | (1 << enemy.gameObject.layer)))
+                            //enemy.gameObject.layer == LayerMask.NameToLayer("Target"))
                         {
                             newSprites.Add(enemy);
                         }
+                    }
+                }
+            }
+            if (_detectPlayerAssistant)
+            {
+                RaycastHit2D enemiesRaycastHit2D = Physics2D.Raycast(_origin, vecFromAngle, _viewDistance, _playerLayerMask | _assistantLayerMask | _layerMask);
+                if (enemiesRaycastHit2D.collider != null)
+                {
+                    if (_playerLayerMask == (_playerLayerMask | (1 << enemiesRaycastHit2D.transform.gameObject.layer)) /*&&
+                        !_playerCurrentlyDetected*/)
+                    {
+                        thisUpdatePlayerDetected = true;
+                    }
+                    else if (_assistantLayerMask == (_assistantLayerMask | (1 << enemiesRaycastHit2D.transform.gameObject.layer)) /*&&
+                        !_assistantCurrentlyDetected*/)
+                    {
+                        thisUpdateAssistantDetected = true;
                     }
                 }
             }
@@ -122,6 +158,30 @@ public class FieldOfView : MonoBehaviour
             {
                 _spritesEnemyInView.Add(item);
                 item.EnableRenderer();
+            }
+        }
+        if (_detectPlayerAssistant)
+        {
+            if (thisUpdatePlayerDetected && !_playerCurrentlyDetected)
+            {
+                _playerCurrentlyDetected = true;
+                _detectedPlayer.Invoke(DETECTIONTYPE.PLAYER);
+            }
+            else if (!thisUpdatePlayerDetected && _playerCurrentlyDetected)
+            {
+                _playerCurrentlyDetected = false;
+                _lostPlayer.Invoke(DETECTIONTYPE.PLAYER);
+            }
+
+            if (thisUpdateAssistantDetected && !_assistantCurrentlyDetected)
+            {
+                _assistantCurrentlyDetected = true;
+                _detectedPlayer.Invoke(DETECTIONTYPE.ASSISTANT);
+            }
+            else if (!thisUpdateAssistantDetected && _assistantCurrentlyDetected)
+            {
+                _assistantCurrentlyDetected = false;
+                _lostPlayer.Invoke(DETECTIONTYPE.ASSISTANT);
             }
         }
     }
