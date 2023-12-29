@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3596576782093800154}
   m_Layer: 10
   m_Name: Rotation
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 754764050296034753}
   m_Layer: 10
   m_Name: FieldOfView
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,6 +87,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   _hideEnemies: 0
+  _detectedPlayer:
+    m_PersistentCalls:
+      m_Calls: []
+  _lostPlayer:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!33 &2558777402822568448
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -507,7 +513,7 @@ GameObject:
   - component: {fileID: 6968174161186657308}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
