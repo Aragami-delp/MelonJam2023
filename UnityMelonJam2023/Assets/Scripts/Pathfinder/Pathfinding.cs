@@ -22,12 +22,12 @@ public class Pathfinding : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        InitPathfinding();
 
         if (wallTilemap == null)
         {
             wallTilemap = GetComponent<Tilemap>();
         }
+        InitPathfinding();
     }
     void Start()
     {
@@ -75,6 +75,7 @@ public class Pathfinding : MonoBehaviour
 
         if (!PositionInPathfinding(startPos) || !PositionInPathfinding(endPos))
         {
+            Debug.LogWarning("Start or end point not in Pathing!");
             return new List<NodeBase>();
         }
 
@@ -131,6 +132,9 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
+        Debug.LogWarning("No path found from: " + startPos + " To: " + endPos);
+        Debug.LogWarning("start interpreted to: " + startNode.OldPosition);
+        Debug.LogWarning("end interpreted to: " + endNode.OldPosition);
         // checked all nodes. no path found
         return new List<NodeBase>();
     }
@@ -192,6 +196,7 @@ public class Pathfinding : MonoBehaviour
             currentNode = currentNode.PreviousNode;
         }
         path.Reverse();
+        Debug.Log("Pathfinding ended with a success. Length: " + path.Count);
         return path;
     }
 

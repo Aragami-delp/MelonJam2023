@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startOpen: 1
   proximityOpen: 1
-  proximityRange: 4
+  proximityRange: 0
   openAmmount: {x: 0.8, y: 0}
 --- !u!58 &2951719693573779489
 CircleCollider2D:
