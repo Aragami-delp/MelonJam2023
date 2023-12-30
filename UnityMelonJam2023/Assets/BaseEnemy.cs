@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class BaseEnemy : MonoBehaviour
+public class BaseEnemy : MonoBehaviour, IHideOutOfView
 {
     [SerializeField]
     FieldOfView fov;
@@ -324,6 +324,7 @@ public class BaseEnemy : MonoBehaviour
     }
 
     Coroutine stunBoy;
+
     public void StunEnemy(float stunTime)
     { 
         if (stunBoy != null) 
@@ -372,6 +373,8 @@ public class BaseEnemy : MonoBehaviour
         spriteRenderer.enabled = true;
         fov.ShowFOV = true;
     }
+
+    public bool AllowHide => true;
 }
 
 [CustomEditor(typeof(BaseEnemy))]
