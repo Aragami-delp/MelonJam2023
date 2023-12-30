@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 4262681857585189554}
   - component: {fileID: 7559385292111948669}
   - component: {fileID: 2291174069012238300}
+  - component: {fileID: 4618343860345811123}
   m_Layer: 16
   m_Name: Lever
   m_TagString: Untagged
@@ -135,6 +136,7 @@ MonoBehaviour:
   _leverDown: {fileID: 6063840728840111789}
   startStatus: 0
   _target: {fileID: 0}
+  _hideWhenNotInView: 0
 --- !u!58 &2291174069012238300
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -170,6 +172,41 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!58 &4618343860345811123
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5904106631237193385}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1 &6063840728840111789
 GameObject:
   m_ObjectHideFlags: 0

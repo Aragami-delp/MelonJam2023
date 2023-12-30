@@ -87,7 +87,7 @@ MonoBehaviour:
   _hideEnemies: 1
   _enemiesLayerMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 69632
   _detectPlayerAssistant: 0
   _assistantLayerMask:
     serializedVersion: 2
