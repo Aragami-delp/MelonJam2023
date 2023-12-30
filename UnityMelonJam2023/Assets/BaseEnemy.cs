@@ -46,6 +46,11 @@ public class BaseEnemy : MonoBehaviour
     
     protected virtual void Start()
     {
+        if (Waypoints.Count == 1) 
+        {
+            Waypoints.Add(Waypoints.First());
+        }
+        
         pathfindingNodes = Pathfinding.GetPath(Waypoints[0].position, Waypoints[1].position);
 
         for (int i = 2; i < Waypoints.Count; i++)

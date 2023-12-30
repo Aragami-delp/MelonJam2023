@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2b4d09b2742b74d8746fbbe236b9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startOpen: 1
+  startOpen: 0
   proximityOpen: 1
-  proximityRange: 4
+  proximityRange: 1.5
   openAmmount: {x: 0.8, y: 0}
 --- !u!58 &2951719693573779489
 CircleCollider2D:
