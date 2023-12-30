@@ -213,7 +213,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
             }
             else if(aiState == EnemyBehaviorState.CHASE)
             { 
-                walkDir = ((Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition() - this.transform.position).normalized;
+                walkDir = ((Vector3)pathToLastSeeonChasePos?[pathToSeenPlayer].GetCorrectPosition() - this.transform.position).normalized;
             }
             else 
             {
