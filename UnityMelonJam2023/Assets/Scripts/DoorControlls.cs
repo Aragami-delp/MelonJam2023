@@ -153,6 +153,7 @@ public class DoorControlls : MonoInteractionTarget
         openDoor = true;
         time = 0f;
         SetDoorWalkable(true);
+        GameManager.Instance?.PlaySound(AUDIOTYPE.DOOR_OPEN);
     }
 
     public void ForceDoorClose() 
@@ -163,6 +164,7 @@ public class DoorControlls : MonoInteractionTarget
         openDoor = false;
         time = 0f;
         SetDoorWalkable(false);
+        GameManager.Instance?.PlaySound(AUDIOTYPE.DOOR_CLOSE);
     }
 
     private Vector3 GetTargetPos(Transform child) 
