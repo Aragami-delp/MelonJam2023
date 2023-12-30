@@ -89,7 +89,10 @@ public class GameManager : MonoBehaviour
         {
             try
             {
-                _audioSources[audioType].Play();
+                if (!_audioSources[audioType].isPlaying)
+                {
+                    _audioSources[audioType].Play();
+                }
             }
             catch (KeyNotFoundException)
             {
