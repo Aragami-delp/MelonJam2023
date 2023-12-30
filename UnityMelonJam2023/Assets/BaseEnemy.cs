@@ -55,7 +55,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     
     protected virtual void Start()
     {
-        //DisableRenderer();
+        DisableRenderer();
         if (Waypoints.Count == 1) 
         {
             Waypoints.Add(Waypoints.First());
@@ -341,11 +341,13 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
                 ExpressionAnimator.ResetTrigger("QuestionMark");
                 ExpressionAnimator.SetTrigger("None");
                 break;
+
             case "Hearth":
                 ExpressionAnimator.ResetTrigger("None");
                 ExpressionAnimator.ResetTrigger("QuestionMark");
                 ExpressionAnimator.SetTrigger("Hearth");
                 break;
+
             case "QuestionMark":
                 ExpressionAnimator.ResetTrigger("Hearth");
                 ExpressionAnimator.ResetTrigger("None");
@@ -380,7 +382,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
             }
             return transform.position == (Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition();
         }
-        catch (Exception e) 
+        catch
         {
             Debug.Log(pathToLastSeeonChasePos.Count);
             return false;
@@ -430,8 +432,19 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     {
         yield return new WaitForSeconds(3f);
         stunned = false;
-        aiState = EnemyBehaviorState.WANDER;
-        PlayExpression("None");
+
+        if (chaseTarget == null) 
+        { 
+            aiState = EnemyBehaviorState.WANDER;
+            PlayExpression("None");
+        }
+        else
+        {
+            PlayExpression("None");
+            aiState = EnemyBehaviorState.ALERT;
+            PlayExpression("QuestionMark");
+        }
+        
     }
 
     private IEnumerator WaitForStun(float stunTime) 
@@ -442,8 +455,17 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         yield return new WaitForSeconds(stunTime);
         PlayExpression("None");
         stunned = false;
-        aiState = EnemyBehaviorState.WANDER;
-        fov.ShowFOV = true;
+
+        if (chaseTarget == null) aiState = EnemyBehaviorState.WANDER;
+        else
+        {
+            PlayExpression("QuestionMark");
+            aiState = EnemyBehaviorState.ALERT;
+        }
+        if (spriteRenderer.enabled) 
+        {
+            fov.ShowFOV = true;
+        }
     }
     public enum EnemyBehaviorState 
     { 
