@@ -20,6 +20,7 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private float _viewDistance = 50f;
     [SerializeField] int _rayCount = 50;
     [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private Vector2 _startLookDir = Vector2.right;
     [Header("Remove Enemy Renderer"), SerializeField] private bool _hideEnemies = false;
     [SerializeField] private LayerMask _enemiesLayerMask;
     [Header("Detect Player"), SerializeField, Tooltip("Detect player and assistant")]
@@ -52,6 +53,8 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
+        SetAimDirection(_startLookDir);
+
         transform.position = Vector3.zero;
         _mesh = new();
         GetComponent<MeshFilter>().mesh = _mesh;

@@ -83,6 +83,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
+  _startLookDir: {x: 1, y: 0}
   _hideEnemies: 1
   _enemiesLayerMask:
     serializedVersion: 2
