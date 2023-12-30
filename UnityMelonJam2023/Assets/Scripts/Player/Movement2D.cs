@@ -26,7 +26,6 @@ public class Movement2D : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
-        this.AddComponent<PlayerInputMessages>();
 
         Instance = this;
     }
