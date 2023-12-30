@@ -33,7 +33,7 @@ public class FieldOfView : MonoBehaviour
     private bool _playerCurrentlyDetected = false;
     private bool _assistantCurrentlyDetected = false;
 
-    private List<IHideOutOfView> _spritesEnemyInView = new();
+    private HashSet<IHideOutOfView> _spritesEnemyInView = new();
     private Mesh _mesh;
     private MeshRenderer _meshRenderer;
     private Vector3 _origin { get; set; }

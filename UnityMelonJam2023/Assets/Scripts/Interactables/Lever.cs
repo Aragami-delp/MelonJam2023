@@ -37,7 +37,7 @@ public class Lever : MonoBehaviour, IInteractable, IHideOutOfView
                 DisableRenderer();
             }
             _status = value;
-            _target.DoStuff(value);
+            _target?.DoStuff(value);
         }
     }
 
