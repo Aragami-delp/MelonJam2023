@@ -129,7 +129,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
 
                 if (chaseTarget != null)
                 {
-                    if (Vector3.Distance(transform.position, chaseTarget.position) <= 1f)
+                    if (Vector3.Distance(transform.position, chaseTarget.position) <= 1.1f)
                     {
                         if (chaseTarget == DeamonScript.Instance.transform) 
                         {
