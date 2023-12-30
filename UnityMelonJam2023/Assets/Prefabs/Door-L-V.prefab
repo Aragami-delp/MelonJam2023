@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2b4d09b2742b74d8746fbbe236b9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startOpen: 1
-  proximityOpen: 1
+  startOpen: 0
+  proximityOpen: 0
   proximityRange: 0
   openAmmount: {x: 0.8, y: 0}
 --- !u!58 &2951719693573779489
@@ -58,7 +58,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4074014748139579696}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

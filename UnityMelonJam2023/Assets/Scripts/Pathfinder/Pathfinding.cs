@@ -65,6 +65,7 @@ public class Pathfinding : MonoBehaviour
         try
         {
             Instance.PositionToNodeBase(TileWorldPos).CanWalkOver = should;
+
         }
         catch (NullReferenceException e)
         {
@@ -199,6 +200,7 @@ public class Pathfinding : MonoBehaviour
             currentNode = currentNode.PreviousNode;
         }
         path.Reverse();
+
         Debug.Log("Pathfinding ended with a success. Length: " + path.Count);
         return path;
     }
