@@ -76,7 +76,12 @@ public class GameManager : MonoBehaviour
             if (audioReference.Reference != null)
             {
                 AudioSource newAudioSource = Instantiate(_audioSourcePrefab, this.transform);
+                newAudioSource.playOnAwake = false;
                 newAudioSource.clip = audioReference.Reference;
+                if (audioReference.Audio == AUDIOTYPE.MUSIC)
+                    { newAudioSource.loop = true; }
+                else
+                    { newAudioSource.loop = false; }
                 newAudioSource.gameObject.name = audioReference.Reference?.name ?? "No Audio";
                 _audioSources.Add(audioReference.Audio, newAudioSource);
             }
