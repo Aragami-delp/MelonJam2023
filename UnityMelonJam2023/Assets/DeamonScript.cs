@@ -14,6 +14,9 @@ public class DeamonScript : MonoBehaviour
     [SerializeField] 
     private FieldOfView _fieldOfView;
 
+    private Animator _animator;
+    private SpriteRenderer _renderer;
+
     [SerializeField]
     private float speed = 5;
 
@@ -32,6 +35,8 @@ public class DeamonScript : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _animator = GetComponent<Animator>();
+        _renderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -50,6 +55,54 @@ public class DeamonScript : MonoBehaviour
             }
         }
 
+        if (_nextPos != null)
+        {
+            Vector3 walkDir = (_nextPos.Value - this.transform.position).normalized;
+
+            _animator.speed = 1;
+
+            if (walkDir.x != 0)
+            {
+                _animator.speed = 1.5f;
+
+                _animator.SetInteger("HorizontalWalk", 1);
+                _renderer.flipX = true;
+
+                if (walkDir.x < 0)
+                {
+                    _renderer.flipX = false;
+                }
+            }
+            else
+            {
+                _animator.speed = 1.5f;
+                _animator.SetInteger("HorizontalWalk", 0);
+            }
+
+            if (walkDir.y != 0)
+            {
+                _animator.speed = 1.5f;
+                if (walkDir.y < 0)
+                {
+                    _animator.SetInteger("VerticalWalk", 1);
+                    _animator.speed = 2;
+                }
+                else
+                {
+                    _animator.SetInteger("VerticalWalk", -1);
+                    _animator.speed = 2;
+                }
+            }
+            else
+            {
+                _animator.SetInteger("VerticalWalk", 0);
+            }
+        }
+        else
+        {
+            _animator.SetInteger("HorizontalWalk", 0);
+            _animator.SetInteger("VerticalWalk", 0);
+        }
     }
 
     public void Fire(InputAction.CallbackContext context)
