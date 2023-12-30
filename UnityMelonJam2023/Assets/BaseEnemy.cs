@@ -68,8 +68,13 @@ public class BaseEnemy : MonoBehaviour
     protected virtual void Update()
     {
         fov.SetOrigin(transform.position);
-
+        
         if (stunned) return;
+
+        if (Vector3.Distance(transform.position, DeamonScript.Instance.transform.position) <= 1f)
+        {
+            StunEnemy(DeamonScript.Instance.StunTime);
+        }
 
         switch (aiState) 
         {
@@ -156,7 +161,6 @@ public class BaseEnemy : MonoBehaviour
                     }
                 }
 
-                Debug.Log(pathToLastSeeonChasePos.Count);
 
                 if (chaseTarget != null) 
                 {
@@ -199,7 +203,7 @@ public class BaseEnemy : MonoBehaviour
         }
         else 
         {
-            GetNewChasePath();
+            //GetNewChasePath();
         }
 
         if (detectedThing == FieldOfView.DETECTIONTYPE.PLAYER && (chaseTarget != DeamonScript.Instance.transform || DeamonScript.Instance.IsbeingChased))
@@ -219,6 +223,7 @@ public class BaseEnemy : MonoBehaviour
             DeamonScript.Instance.IsbeingChased = false;
         }
         chaseTarget = null;
+        Debug.LogWarning("target yeetus");
     }
 
     public void AlertEnemyTo( Transform alertToObject) 
@@ -272,6 +277,7 @@ public class BaseEnemy : MonoBehaviour
 
     public void StunEnemy(float stunTime)   
     {
+        Debug.LogWarning("Enemy stunned");
         ExpressionAnimator.SetTrigger("Hearth");
         ExpressionAnimator.SetTrigger("None");
         StopCoroutine(WaitForStun(stunTime));

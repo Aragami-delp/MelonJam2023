@@ -199,6 +199,7 @@ public class Pathfinding : MonoBehaviour
             currentNode = currentNode.PreviousNode;
         }
         path.Reverse();
+
         Debug.Log("Pathfinding ended with a success. Length: " + path.Count);
         return path;
     }
