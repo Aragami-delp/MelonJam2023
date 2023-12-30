@@ -46,6 +46,7 @@ public class BaseEnemy : MonoBehaviour
     
     protected virtual void Start()
     {
+        DisableRenderer();
         if (Waypoints.Count == 1) 
         {
             Waypoints.Add(Waypoints.First());
