@@ -6,18 +6,9 @@ using static UnityEngine.InputSystem.DefaultInputActions;
 
 public class GameManager : MonoBehaviour
 {
-    public enum SceneSelection
-    {
-        NONE = 0,
-        MAINMENU = 10,
-        ARATEST = 100,
-        FUCHSTEST = 101,
-        ARATEST2 = 102,
-
-    }
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private SceneSelection _firstLevel;
+    [SerializeField] private List<SceneLevel> _levelNames;
 
     // Start is called before the first frame update
     private void Awake()
@@ -31,31 +22,22 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void LoadScene(SceneSelection _nextScene)
+    public void LoadScene(LEVEL _nextLevel)
     {
-        switch (_nextScene)
+        foreach (SceneLevel sceneLevel in _levelNames)
         {
-            case SceneSelection.MAINMENU:
-                SceneManager.LoadScene(0);
-                break;
-            case SceneSelection.ARATEST:
-                SceneManager.LoadScene("AraTestScene");
-                break;
-            case SceneSelection.FUCHSTEST:
-                SceneManager.LoadScene("Fuchs Scene");
-                break;
-            case SceneSelection.ARATEST2:
-                SceneManager.LoadScene("AraTestScene Level2");
-                break;
-            case SceneSelection.NONE:
-            default:
-                break;
+            if (sceneLevel.Level == _nextLevel)
+            {
+                try
+                {
+                    SceneManager.LoadScene(sceneLevel.SceneName);
+                }
+                catch
+                {
+                    Debug.LogError("Couldn't load level");
+                }
+            }
         }
-    }
-
-    public void LoadFirstLevel()
-    {
-        LoadScene(_firstLevel);
     }
 
     public void CloseGame()
