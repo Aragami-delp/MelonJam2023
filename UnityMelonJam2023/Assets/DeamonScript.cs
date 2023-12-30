@@ -10,7 +10,7 @@ public class DeamonScript : MonoBehaviour
     public static DeamonScript Instance;
 
     public bool IsbeingChased { get; set; }
-
+    public float StunTime;
     [SerializeField] 
     private FieldOfView _fieldOfView;
 
