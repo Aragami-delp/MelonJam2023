@@ -38,8 +38,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadScene(LEVEL nextLevel)
+    public void LoadScene(LEVEL nextLevel = LEVEL.NEXT)
     {
+        if (nextLevel == LEVEL.NEXT)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
         foreach (SceneLevel sceneLevel in _levelNames)
         {
             if (sceneLevel.Level == nextLevel)
@@ -72,7 +76,12 @@ public class GameManager : MonoBehaviour
             if (audioReference.Reference != null)
             {
                 AudioSource newAudioSource = Instantiate(_audioSourcePrefab, this.transform);
+                newAudioSource.playOnAwake = false;
                 newAudioSource.clip = audioReference.Reference;
+                if (audioReference.Audio == AUDIOTYPE.MUSIC)
+                    { newAudioSource.loop = true; }
+                else
+                    { newAudioSource.loop = false; }
                 newAudioSource.gameObject.name = audioReference.Reference?.name ?? "No Audio";
                 _audioSources.Add(audioReference.Audio, newAudioSource);
             }
@@ -85,7 +94,10 @@ public class GameManager : MonoBehaviour
         {
             try
             {
-                _audioSources[audioType].Play();
+                if (!_audioSources[audioType].isPlaying)
+                {
+                    _audioSources[audioType].Play();
+                }
             }
             catch (KeyNotFoundException)
             {

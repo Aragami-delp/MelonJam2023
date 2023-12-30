@@ -6,6 +6,7 @@ using UnityEngine;
 public enum LEVEL
 {
     MAINMENU = 101,
+    NEXT = 102,
     LEVEL_0 = 0,
     LEVEL_1 = 1,
     LEVEL_2 = 2,

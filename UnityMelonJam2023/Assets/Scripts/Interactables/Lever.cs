@@ -10,6 +10,7 @@ public class Lever : MonoBehaviour, IInteractable, IHideOutOfView
     [SerializeField] private bool startStatus = false;
 
     [SerializeField] private MonoInteractionTarget _target;
+    [SerializeField] private MonoInteractionTarget _target2;
 
     [SerializeField] private bool _hideWhenNotInView;
     private bool _status;
@@ -38,6 +39,7 @@ public class Lever : MonoBehaviour, IInteractable, IHideOutOfView
             }
             _status = value;
             _target?.DoStuff(value);
+            _target2?.DoStuff(value);
         }
     }
 
@@ -51,6 +53,7 @@ public class Lever : MonoBehaviour, IInteractable, IHideOutOfView
     public void Interact()
     {
         Status = !Status;
+        GameManager.Instance?.PlaySound(AUDIOTYPE.LEVER);
     }
 
     public void DisableRenderer()
