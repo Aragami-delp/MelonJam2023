@@ -51,6 +51,11 @@ public class DoorControlls : MonoInteractionTarget
         if (proximityOpen) 
         {
             OpenDoor();
+            if (doLerp && !openDoor) 
+            {
+                openDoor = true;
+                time = 1 - time;
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -61,6 +66,10 @@ public class DoorControlls : MonoInteractionTarget
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        OpenDoor();
+    }
     private void OnDrawGizmos()
     {
         if (proximityOpen)
