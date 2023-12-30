@@ -18,6 +18,9 @@ public class BaseEnemy : MonoBehaviour
     protected float speed = 5;
 
     [SerializeField]
+    protected float timeUntillChase = 2f;
+
+    [SerializeField]
     protected float chaseTargetPositionUpdates;
 
     [SerializeField]
@@ -46,6 +49,7 @@ public class BaseEnemy : MonoBehaviour
     
     protected virtual void Start()
     {
+        DisableRenderer();
         pathfindingNodes = Pathfinding.GetPath(Waypoints[0].position, Waypoints[1].position);
 
         for (int i = 2; i < Waypoints.Count; i++)
@@ -94,7 +98,7 @@ public class BaseEnemy : MonoBehaviour
             
             case EnemyBehaviorState.ALERT:
                 alertLevel += Time.deltaTime;
-                if(alertLevel >= 3 ) 
+                if(alertLevel >= timeUntillChase ) 
                 {
                     if (chaseTarget == null) 
                     {
@@ -327,7 +331,11 @@ public class BaseEnemy : MonoBehaviour
         PlayExpression("None");
         stunned = false;
         aiState = EnemyBehaviorState.WANDER;
-        fov.ShowFOV = true;
+
+        if (spriteRenderer.enabled ) 
+        {
+            fov.ShowFOV = true;
+        }
     }
     public enum EnemyBehaviorState 
     { 
