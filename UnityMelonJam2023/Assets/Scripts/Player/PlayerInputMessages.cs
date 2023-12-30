@@ -48,4 +48,12 @@ public class PlayerInputMessages : MonoBehaviour
             _interaction?.UseInteract(1);
         }
     }
+
+    public void Restart(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameManager.Instance?.ReloadScene();
+        }
+    }
 }
