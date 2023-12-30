@@ -5,8 +5,8 @@ using UnityEngine;
 
 public enum LEVEL
 {
-    NONE = 0,
     MAINMENU = 100,
+    LEVEL_0 = 0,
     LEVEL_1 = 1,
     LEVEL_2 = 2,
     LEVEL_3 = 3,

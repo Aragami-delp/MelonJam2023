@@ -47,6 +47,8 @@ MonoBehaviour:
   _levelNames:
   - Level: 100
     SceneName: MainMenu
+  - Level: 0
+    SceneName: Level 0
   - Level: 1
     SceneName: Level 1
   - Level: 2
