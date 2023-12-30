@@ -35,8 +35,9 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     protected EnemyBehaviorState aiState;
 
     [SerializeField]
-    protected Animator ExpressionAnimator;
-    
+    protected Animator ExpressionAnimator,guardAnimator;
+    [SerializeField]
+    protected SpriteRenderer animationSpriteRenderer;
     protected List<NodeBase> pathfindingNodes;
     protected int pathfindingProgress = 0;
     
@@ -54,7 +55,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     
     protected virtual void Start()
     {
-        DisableRenderer();
+        //DisableRenderer();
         if (Waypoints.Count == 1) 
         {
             Waypoints.Add(Waypoints.First());
@@ -93,6 +94,8 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
 
         if (stunned) return;
 
+
+        EnemyAnim();
         switch (aiState) 
         {
             case EnemyBehaviorState.WANDER:
@@ -199,6 +202,69 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         }
     }
 
+    private void EnemyAnim() 
+    {
+        if ( aiState != EnemyBehaviorState.ALERT)
+        {
+            Vector3 walkDir;
+            if (aiState == EnemyBehaviorState.WANDER)
+            {
+                walkDir = ((Vector3)pathfindingNodes[currentWaypoint].GetCorrectPosition() - this.transform.position).normalized;
+            }
+            else if(aiState == EnemyBehaviorState.CHASE)
+            { 
+                walkDir = ((Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition() - this.transform.position).normalized;
+            }
+            else 
+            {
+                walkDir = transform.forward;
+            }
+
+            guardAnimator.speed = 1;
+
+            if (walkDir.x != 0)
+            {
+                guardAnimator.speed = 1.5f;
+
+                guardAnimator.SetInteger("HorizontalWalk", 1);
+                animationSpriteRenderer.flipX = false;
+
+                if (walkDir.x < 0)
+                {
+                    animationSpriteRenderer.flipX = true;
+                }
+            }
+            else
+            {
+                guardAnimator.speed = 1.5f;
+                guardAnimator.SetInteger("HorizontalWalk", 0);
+            }
+
+            if (walkDir.y != 0)
+            {
+                guardAnimator.speed = 1.5f;
+                if (walkDir.y < 0)
+                {
+                    guardAnimator.SetInteger("VerticalWalk", 1);
+                    guardAnimator.speed = 2;
+                }
+                else
+                {
+                    guardAnimator.SetInteger("VerticalWalk", -1);
+                    guardAnimator.speed = 2;
+                }
+            }
+            else
+            {
+                guardAnimator.SetInteger("VerticalWalk", 0);
+            }
+        }
+        else
+        {
+            guardAnimator.SetInteger("HorizontalWalk", 0);
+            guardAnimator.SetInteger("VerticalWalk", 0);
+        }
+    }
     protected void GetNewChasePath() 
     {
         pathToSeenPlayer = 0;

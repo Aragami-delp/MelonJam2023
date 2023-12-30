@@ -56,10 +56,15 @@ MonoBehaviour:
   - {fileID: 8569857619660622888}
   currentWaypoint: 0
   speed: 5
+  chaseSpeed: 7
+  loopToBeginning: 0
+  timeUntillChase: 2
   chaseTargetPositionUpdates: 1
   stunned: 0
   aiState: 0
   ExpressionAnimator: {fileID: 1386097074392712397}
+  guardAnimator: {fileID: 0}
+  animationSpriteRenderer: {fileID: 2054264946606470166}
   pathToSeenPlayer: 0
   spriteRenderer: {fileID: 2054264946606470166}
 --- !u!61 &7287128732580568885
@@ -477,7 +482,7 @@ Transform:
   - {fileID: 3726530305703796493}
   - {fileID: 528787553976085782}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9181808934188325417
 GameObject:
@@ -489,6 +494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3967718285816381274}
   - component: {fileID: 2054264946606470166}
+  - component: {fileID: 9061906245585116875}
   m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
@@ -563,3 +569,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &9061906245585116875
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9181808934188325417}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac7853b36a43a5d44b1a91318a67c86a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
