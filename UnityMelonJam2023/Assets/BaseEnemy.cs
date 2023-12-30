@@ -444,7 +444,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
             aiState = EnemyBehaviorState.ALERT;
             PlayExpression("QuestionMark");
         }
-        
+        PlayExpression("None");
     }
 
     private IEnumerator WaitForStun(float stunTime) 
@@ -459,6 +459,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         if (chaseTarget == null) aiState = EnemyBehaviorState.WANDER;
         else
         {
+            PlayExpression("None");
             PlayExpression("QuestionMark");
             aiState = EnemyBehaviorState.ALERT;
         }
