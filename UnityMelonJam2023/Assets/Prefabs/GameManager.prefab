@@ -71,5 +71,19 @@ MonoBehaviour:
     SceneName: Level 10
   _audioClipReference:
   - Audio: 10
+    Reference: {fileID: 8300000, guid: 4392652966698464d9d788abc49a94cf, type: 3}
+  - Audio: 100
+    Reference: {fileID: 0}
+  - Audio: 101
+    Reference: {fileID: 0}
+  - Audio: 102
+    Reference: {fileID: 0}
+  - Audio: 103
+    Reference: {fileID: 0}
+  - Audio: 104
+    Reference: {fileID: 0}
+  - Audio: 105
+    Reference: {fileID: 0}
+  - Audio: 106
     Reference: {fileID: 0}
   _audioSourcePrefab: {fileID: 3709787964653778573, guid: 8522f3f924ad0c2458a5d8fc9fd2b7fc, type: 3}
