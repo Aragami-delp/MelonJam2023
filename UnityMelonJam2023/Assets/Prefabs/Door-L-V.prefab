@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startOpen: 0
-  proximityOpen: 1
+  proximityOpen: 0
   proximityRange: 0
   openAmmount: {x: 0.8, y: 0}
 --- !u!58 &2951719693573779489
