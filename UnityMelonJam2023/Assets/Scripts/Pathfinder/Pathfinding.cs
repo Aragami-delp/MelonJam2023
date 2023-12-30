@@ -65,6 +65,7 @@ public class Pathfinding : MonoBehaviour
         try
         {
             Instance.PositionToNodeBase(TileWorldPos).CanWalkOver = should;
+
         }
         catch (NullReferenceException e)
         {

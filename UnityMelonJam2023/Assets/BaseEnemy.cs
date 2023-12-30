@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
+using System;
+
 public class BaseEnemy : MonoBehaviour
 {
     [SerializeField]
@@ -15,7 +17,11 @@ public class BaseEnemy : MonoBehaviour
     protected int currentWaypoint = 0;
 
     [SerializeField]
-    protected float speed = 5;
+    protected float speed = 5,chaseSpeed = 7;
+
+
+    [SerializeField]
+    protected float timeUntillChase = 2f;
 
     [SerializeField]
     protected float chaseTargetPositionUpdates;
@@ -100,7 +106,7 @@ public class BaseEnemy : MonoBehaviour
             
             case EnemyBehaviorState.ALERT:
                 alertLevel += Time.deltaTime;
-                if(alertLevel >= 3 ) 
+                if(alertLevel >= timeUntillChase) 
                 {
                     if (chaseTarget == null) 
                     {
@@ -181,7 +187,7 @@ public class BaseEnemy : MonoBehaviour
                 }
 
 
-                transform.position = Vector3.MoveTowards(this.transform.position,pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition(), Time.deltaTime * speed);
+                transform.position = Vector3.MoveTowards(this.transform.position,pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition(), Time.deltaTime * chaseSpeed);
 
 
                 break;
@@ -275,7 +281,19 @@ public class BaseEnemy : MonoBehaviour
     }
     protected bool ReachedChaseWaypoint()
     {
-        return transform.position == (Vector3) pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition();
+        try
+        {
+            if (pathToLastSeeonChasePos.Count == 0) 
+            {
+                return true;
+            }
+            return transform.position == (Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition();
+        }
+        catch (Exception e) 
+        {
+            Debug.Log(pathToLastSeeonChasePos.Count);
+            return false;
+        }
     }
     public void AddWaypoint() 
     {
