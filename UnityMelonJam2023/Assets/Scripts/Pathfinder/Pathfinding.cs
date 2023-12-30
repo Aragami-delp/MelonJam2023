@@ -28,6 +28,7 @@ public class Pathfinding : MonoBehaviour
             wallTilemap = GetComponent<Tilemap>();
         }
         InitPathfinding();
+
     }
     void Start()
     {
@@ -42,7 +43,7 @@ public class Pathfinding : MonoBehaviour
 
         offset = new Vector2Int(Mathf.Abs(bounds.xMin), Mathf.Abs(bounds.yMin));
 
-
+        Debug.Log("Pathing Map init size: "+ bounds.size.x + " "+ bounds.size.y +"!");
 
         for (int x = 0; x < bounds.size.x; x++)
         {
@@ -55,6 +56,8 @@ public class Pathfinding : MonoBehaviour
                 NodeBase[x, y] = newNode;
             }
         }
+
+
     }
 
     public static void ChangeTileWalkable(Vector3 TileWorldPos, bool should)
@@ -231,12 +234,24 @@ public class Pathfinding : MonoBehaviour
     public bool PositionInPathfinding(Vector3 pos)
     {
         Vector2Int posV2 = (Vector2Int)wallTilemap.WorldToCell(pos);
+
+        Debug.Log("pos:" + pos + " translated to: " + posV2);
         int newX = posV2.x + offset.x;
         int newY = posV2.y + offset.y;
 
+
+
         if (GetWith() > newX && GetHight() > newY)
         {
-            if (GetNode(newX, newY).CanWalkOver) return true;
+            NodeBase test = GetNode(newX, newY);
+            //if (GetNode(newX, newY).CanWalkOver) return true;
+            if (test.CanWalkOver) 
+            {
+                return true;
+            }
+            Debug.Log("Tilemap has tile there: "  + wallTilemap.HasTile((Vector3Int)test.OldPosition));
+            Debug.Log("Tile name: " + wallTilemap.GetTile((Vector3Int)test.OldPosition).name);
+            //wallTilemap.SetTile((Vector3Int)test.OldPosition, DEBUGG_TILE);
         }
 
         return false;
