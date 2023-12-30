@@ -44,4 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f099c2b6e0ac064bbf953371b1b6510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstLevel: 100
+  _levelNames:
+  - Level: 100
+    SceneName: MainMenu
+  - Level: 1
+    SceneName: AraTestScene
+  - Level: 2
+    SceneName: AraTestScene Level2

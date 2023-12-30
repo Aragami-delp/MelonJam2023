@@ -6,7 +6,7 @@ public class MainMenuDings : MonoBehaviour
 {
     public void StartGame()
     {
-        GameManager.Instance?.LoadFirstLevel();
+        GameManager.Instance?.LoadScene(LEVEL.LEVEL_1);
     }
 
     public void CloseGame()
