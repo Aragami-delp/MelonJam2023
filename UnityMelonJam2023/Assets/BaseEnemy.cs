@@ -37,6 +37,9 @@ public class BaseEnemy : MonoBehaviour
     protected List<NodeBase> pathToLastSeeonChasePos;
     [SerializeField]
     protected int pathToSeenPlayer = 0;
+
+    [SerializeField]
+    private SpriteRenderer spriteRenderer;
     
     protected virtual void Start()
     {
@@ -288,6 +291,18 @@ public class BaseEnemy : MonoBehaviour
         ALERT,
         CHASE,
         SEARCH
+    }
+
+    public void DisableRenderer()
+    {
+        spriteRenderer.enabled = false;
+        fov.ShowFOV = false;
+    }
+
+    public void EnableRenderer()
+    {
+        spriteRenderer.enabled = true;
+        fov.ShowFOV = true;
     }
 }
 
