@@ -46,6 +46,12 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     
     protected virtual void Start()
     {
+        DisableRenderer();
+        if (Waypoints.Count == 1) 
+        {
+            Waypoints.Add(Waypoints.First());
+        }
+        
         pathfindingNodes = Pathfinding.GetPath(Waypoints[0].position, Waypoints[1].position);
 
         for (int i = 2; i < Waypoints.Count; i++)
@@ -98,7 +104,8 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
                 {
                     if (chaseTarget == null) 
                     {
-                        ExpressionAnimator.SetTrigger("None");
+                        //ExpressionAnimator.SetTrigger("None");
+                        PlayExpression("None");
                         aiState = EnemyBehaviorState.WANDER;
                         alertLevel = 0;
                         return;
@@ -107,7 +114,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
                     alertLevel = 0;
                     aiState = EnemyBehaviorState.CHASE;
                     GetNewChasePath();
-                    //TODO: Add alert Anim
+                    
                 }
                 break;
 
@@ -201,7 +208,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         if (aiState != EnemyBehaviorState.CHASE) 
         {
             aiState = EnemyBehaviorState.ALERT;
-            ExpressionAnimator.SetTrigger("QuestionMark");
+            PlayExpression("QuestionMark");
         }
         else 
         {
@@ -228,6 +235,27 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         Debug.LogWarning("target yeetus");
     }
 
+    private void PlayExpression(string play) 
+    {
+        switch (play) 
+        {
+            case "None":
+                ExpressionAnimator.ResetTrigger("Hearth");
+                ExpressionAnimator.ResetTrigger("QuestionMark");
+                ExpressionAnimator.SetTrigger("None");
+                break;
+            case "Hearth":
+                ExpressionAnimator.ResetTrigger("None");
+                ExpressionAnimator.ResetTrigger("QuestionMark");
+                ExpressionAnimator.SetTrigger("Hearth");
+                break;
+            case "QuestionMark":
+                ExpressionAnimator.ResetTrigger("Hearth");
+                ExpressionAnimator.ResetTrigger("None");
+                ExpressionAnimator.SetTrigger("QuestionMark");
+                break;
+        }
+    }
     public void AlertEnemyTo( Transform alertToObject) 
     {
         chaseTarget = alertToObject;
@@ -285,7 +313,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         {
             StopCoroutine(stunBoy);
         }
-
+        PlayExpression("Hearth");
         stunBoy = StartCoroutine(WaitForStun(stunTime));
     }
 
@@ -294,7 +322,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         yield return new WaitForSeconds(3f);
         stunned = false;
         aiState = EnemyBehaviorState.WANDER;
-        ExpressionAnimator.SetTrigger("None");
+        PlayExpression("None");
     }
 
     private IEnumerator WaitForStun(float stunTime) 
@@ -303,7 +331,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         fov.ShowFOV = false;
         stunned = true;
         yield return new WaitForSeconds(stunTime);
-        Debug.LogWarning("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+        PlayExpression("None");
         stunned = false;
         aiState = EnemyBehaviorState.WANDER;
         fov.ShowFOV = true;

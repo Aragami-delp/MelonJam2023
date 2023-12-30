@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 4815474784980654451}
   - component: {fileID: 6864073420830056205}
   - component: {fileID: 6847311373503508106}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FOV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,6 +186,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
+  _startLookDir: {x: 1, y: 0}
   _hideEnemies: 0
   _enemiesLayerMask:
     serializedVersion: 2
@@ -392,7 +393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8569857619660622888}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WayPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4442840867500739203}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WayPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1812746975282914270}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,7 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3967718285816381274}
   - component: {fileID: 2054264946606470166}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
