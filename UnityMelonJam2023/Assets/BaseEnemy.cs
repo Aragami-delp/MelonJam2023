@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+[DefaultExecutionOrder(100)]
 public class BaseEnemy : MonoBehaviour, IHideOutOfView
 {
     [SerializeField]
