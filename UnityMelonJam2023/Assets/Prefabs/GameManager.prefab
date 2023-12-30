@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelNames:
-  - Level: 100
+  - Level: 101
     SceneName: MainMenu
   - Level: 0
     SceneName: Level 0

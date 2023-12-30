@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    [ContextMenu("ReloadScene")]
+    public void ReloadScene()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void LoadScene(LEVEL _nextLevel)
     {
         foreach (SceneLevel sceneLevel in _levelNames)
