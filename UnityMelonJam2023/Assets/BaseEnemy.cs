@@ -69,12 +69,14 @@ public class BaseEnemy : MonoBehaviour
     {
         fov.SetOrigin(transform.position);
         
-        if (stunned) return;
-
-        if (Vector3.Distance(transform.position, DeamonScript.Instance.transform.position) <= 1f)
+        if (Vector3.Distance(transform.position, DeamonScript.Instance.transform.position) <= 2f)
         {
+            
             StunEnemy(DeamonScript.Instance.StunTime);
+
         }
+
+        if (stunned) return;
 
         switch (aiState) 
         {
@@ -275,13 +277,15 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    public void StunEnemy(float stunTime)   
-    {
-        Debug.LogWarning("Enemy stunned");
-        ExpressionAnimator.SetTrigger("Hearth");
-        ExpressionAnimator.SetTrigger("None");
-        StopCoroutine(WaitForStun(stunTime));
-        StartCoroutine(WaitForStun(stunTime));
+    Coroutine stunBoy;
+    public void StunEnemy(float stunTime)
+    { 
+        if (stunBoy != null) 
+        {
+            StopCoroutine(stunBoy);
+        }
+
+        stunBoy = StartCoroutine(WaitForStun(stunTime));
     }
 
     private IEnumerator WaitBeforePlayerEscape() 
@@ -294,10 +298,14 @@ public class BaseEnemy : MonoBehaviour
 
     private IEnumerator WaitForStun(float stunTime) 
     {
+        
+        fov.ShowFOV = false;
         stunned = true;
         yield return new WaitForSeconds(stunTime);
+        Debug.LogWarning("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
         stunned = false;
         aiState = EnemyBehaviorState.WANDER;
+        fov.ShowFOV = true;
     }
     public enum EnemyBehaviorState 
     { 
