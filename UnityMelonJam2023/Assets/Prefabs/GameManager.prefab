@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5966851862133725122}
   - component: {fileID: 8122015214536191389}
+  - component: {fileID: 2954163057251675664}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -69,3 +70,15 @@ MonoBehaviour:
     SceneName: Level 9
   - Level: 10
     SceneName: Level 10
+  _audioClipReference:
+  - Audio: 10
+    Reference: {fileID: 0}
+  _audioSourcePrefab: {fileID: 3709787964653778573, guid: 8522f3f924ad0c2458a5d8fc9fd2b7fc, type: 3}
+--- !u!81 &2954163057251675664
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6824153372679021532}
+  m_Enabled: 1
