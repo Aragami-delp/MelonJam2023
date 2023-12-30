@@ -38,6 +38,8 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     protected Animator ExpressionAnimator,guardAnimator;
     [SerializeField]
     protected SpriteRenderer animationSpriteRenderer;
+    [SerializeField]
+    protected bool dontHideOnStart;
     protected List<NodeBase> pathfindingNodes;
     protected int pathfindingProgress = 0;
     
@@ -55,7 +57,8 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     
     protected virtual void Start()
     {
-        DisableRenderer();
+
+        if(!dontHideOnStart) DisableRenderer();
         if (Waypoints.Count == 1) 
         {
             Waypoints.Add(Waypoints.First());
