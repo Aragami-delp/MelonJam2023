@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
+[RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
 public class FieldOfView : MonoBehaviour
 {
     public enum DETECTIONTYPE
