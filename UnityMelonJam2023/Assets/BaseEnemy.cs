@@ -102,7 +102,14 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         switch (aiState) 
         {
             case EnemyBehaviorState.WANDER:
-                fov.SetAimDirection(((Vector3)pathfindingNodes[currentWaypoint].GetCorrectPosition() - transform.position).normalized);
+                if (!(Waypoints.Count == 2 && Waypoints[0].Equals(Waypoints[1])))
+                {
+                    SetEnemyAimDirection(((Vector3)pathfindingNodes[currentWaypoint].GetCorrectPosition() - transform.position).normalized);
+                }
+                else
+                {
+                    SetEnemyAimDirection(null);
+                }
                 transform.position = Vector3.MoveTowards(this.transform.position, pathfindingNodes[currentWaypoint].GetCorrectPosition(), Time.deltaTime * speed);
                 if (ReachedWaypoint())
                 {
@@ -187,11 +194,11 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
 
                 if (chaseTarget != null) 
                 {
-                    fov.SetAimDirection((chaseTarget.position - transform.position).normalized);
+                    SetEnemyAimDirection((chaseTarget.position - transform.position).normalized);
                 }
                 else 
                 {
-                    fov.SetAimDirection(((Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition() - transform.position).normalized);
+                    SetEnemyAimDirection(((Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition() - transform.position).normalized);
                 }
 
 
@@ -494,6 +501,11 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     }
 
     public bool AllowHide => true;
+
+    private void SetEnemyAimDirection(Vector3? aimDirection)
+    {
+        fov.SetAimDirection(aimDirection);
+    }
 }
 
 [CustomEditor(typeof(BaseEnemy))]

@@ -196,8 +196,13 @@ public class FieldOfView : MonoBehaviour
 
     }
 
-    public void SetAimDirection(Vector3 aimDirection)
+    public void SetAimDirection(Vector3? aimDirection = null)
     {
-        this._startingAngle = Utility.GetAngleFromVectorFloat(aimDirection) + _fov / 2f;
+        this._startingAngle =
+            aimDirection is not null
+            ?
+            Utility.GetAngleFromVectorFloat(aimDirection.Value) + _fov / 2f
+            :
+            Utility.GetAngleFromVectorFloat(_startLookDir) + _fov / 2f;
     }
 }
