@@ -63,7 +63,7 @@ MonoBehaviour:
   stunned: 0
   aiState: 0
   ExpressionAnimator: {fileID: 1386097074392712397}
-  guardAnimator: {fileID: 0}
+  guardAnimator: {fileID: 9061906245585116875}
   animationSpriteRenderer: {fileID: 2054264946606470166}
   pathToSeenPlayer: 0
   spriteRenderer: {fileID: 2054264946606470166}
