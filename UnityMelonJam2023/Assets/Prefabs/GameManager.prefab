@@ -75,9 +75,9 @@ MonoBehaviour:
   - Audio: 103
     Reference: {fileID: 8300000, guid: f180295c49420bd49803d8838105af70, type: 3}
   - Audio: 104
-    Reference: {fileID: 0}
+    Reference: {fileID: 8300000, guid: 306fa0bc100251b4ebb0e192b7ee59b6, type: 3}
   - Audio: 105
-    Reference: {fileID: 0}
+    Reference: {fileID: 8300000, guid: 9fd28f3b56ec3764d8bbb9fa517e3b32, type: 3}
   - Audio: 106
-    Reference: {fileID: 0}
+    Reference: {fileID: 8300000, guid: d91f481577467a349b8f720a3e1ee38a, type: 3}
   _audioSourcePrefab: {fileID: 3709787964653778573, guid: 8522f3f924ad0c2458a5d8fc9fd2b7fc, type: 3}
