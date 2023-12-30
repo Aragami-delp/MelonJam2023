@@ -140,8 +140,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
                         }
                         else 
                         {
-                            Time.timeScale = 0;
-                            Debug.LogWarning("Player ded boyyyyyy");
+                            GameManager.Instance.ReloadScene();
                         }
                         return;
                     }
