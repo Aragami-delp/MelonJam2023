@@ -32,7 +32,7 @@ public class FieldOfView : MonoBehaviour
     private bool _playerCurrentlyDetected = false;
     private bool _assistantCurrentlyDetected = false;
 
-    private List<SimpleEnemyFOV> _spritesEnemyInView = new();
+    private List<BaseEnemy> _spritesEnemyInView = new();
     private Mesh _mesh;
     private MeshRenderer _meshRenderer;
     private Vector3 _origin { get; set; }
@@ -62,7 +62,7 @@ public class FieldOfView : MonoBehaviour
 
     private void LateUpdate()
     {
-        List<SimpleEnemyFOV> newSprites = new();
+        List<BaseEnemy> newSprites = new();
         bool thisUpdatePlayerDetected = false;
         bool thisUpdateAssistantDetected = false;
 
@@ -113,7 +113,7 @@ public class FieldOfView : MonoBehaviour
                 RaycastHit2D enemiesRaycastHit2D = Physics2D.Raycast(_origin, vecFromAngle, _viewDistance, _enemiesLayerMask | _layerMask);
                 if (enemiesRaycastHit2D.collider != null)
                 {
-                    if (enemiesRaycastHit2D.transform.TryGetComponent(out SimpleEnemyFOV enemy))
+                    if (enemiesRaycastHit2D.transform.TryGetComponent(out BaseEnemy enemy))
                     {
                         if (_enemiesLayerMask == (_enemiesLayerMask | (1 << enemy.gameObject.layer)))
                             //enemy.gameObject.layer == LayerMask.NameToLayer("Target"))
@@ -150,12 +150,12 @@ public class FieldOfView : MonoBehaviour
 
         if (_hideEnemies)
         {
-            foreach (SimpleEnemyFOV item in _spritesEnemyInView.Except(newSprites).ToList())
+            foreach (BaseEnemy item in _spritesEnemyInView.Except(newSprites).ToList())
             {
                 _spritesEnemyInView.Remove(item);
                 item.DisableRenderer();
             }
-            foreach (SimpleEnemyFOV item in newSprites)
+            foreach (BaseEnemy item in newSprites)
             {
                 _spritesEnemyInView.Add(item);
                 item.EnableRenderer();
