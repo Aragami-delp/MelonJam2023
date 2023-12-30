@@ -38,8 +38,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadScene(LEVEL nextLevel)
+    public void LoadScene(LEVEL nextLevel = LEVEL.NEXT)
     {
+        if (nextLevel == LEVEL.NEXT)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
         foreach (SceneLevel sceneLevel in _levelNames)
         {
             if (sceneLevel.Level == nextLevel)
