@@ -122,6 +122,7 @@ public class DeamonScript : MonoBehaviour
             
 
             SetNextPos();
+            GameManager.Instance?.PlaySound(AUDIOTYPE.SEND_DEAMON);
         }
     }
 

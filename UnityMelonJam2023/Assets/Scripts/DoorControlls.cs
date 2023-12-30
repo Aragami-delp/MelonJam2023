@@ -129,6 +129,7 @@ public class DoorControlls : MonoInteractionTarget
             doLerp = true;
             openDoor = true;
             time = 0f;
+            GameManager.Instance?.PlaySound(AUDIOTYPE.DOOR_OPEN);
         }
     }
     [ContextMenu("CloseDoor")]
@@ -140,6 +141,7 @@ public class DoorControlls : MonoInteractionTarget
             doLerp = true;
             openDoor = false;
             time = 0f;
+            GameManager.Instance?.PlaySound(AUDIOTYPE.DOOR_CLOSE);
         }
     }
 

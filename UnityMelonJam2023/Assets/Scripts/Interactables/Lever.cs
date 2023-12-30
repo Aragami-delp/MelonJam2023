@@ -51,6 +51,7 @@ public class Lever : MonoBehaviour, IInteractable, IHideOutOfView
     public void Interact()
     {
         Status = !Status;
+        GameManager.Instance?.PlaySound(AUDIOTYPE.LEVER);
     }
 
     public void DisableRenderer()

@@ -283,6 +283,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         {
             aiState = EnemyBehaviorState.ALERT;
             PlayExpression("QuestionMark");
+            GameManager.Instance?.PlaySound(AUDIOTYPE.ENEMY_QUESTION);
         }
         else 
         {
@@ -380,7 +381,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
             }
             return transform.position == (Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition();
         }
-        catch (Exception e) 
+        catch (Exception) 
         {
             Debug.Log(pathToLastSeeonChasePos.Count);
             return false;
@@ -423,6 +424,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
             StopCoroutine(stunBoy);
         }
         PlayExpression("Hearth");
+        GameManager.Instance?.PlaySound(AUDIOTYPE.ENEMY_STUN);
         stunBoy = StartCoroutine(WaitForStun(stunTime));
     }
 
