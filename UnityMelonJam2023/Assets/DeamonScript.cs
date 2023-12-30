@@ -7,6 +7,9 @@ using UnityEngine.Tilemaps;
 
 public class DeamonScript : MonoBehaviour
 {
+    public static DeamonScript Instance;
+
+    public bool IsbeingChased { get; set; }
 
     [SerializeField] 
     private FieldOfView _fieldOfView;
@@ -23,11 +26,12 @@ public class DeamonScript : MonoBehaviour
 
     private Vector3? _mouseClick = null;
 
+    [SerializeField]
+    LayerMask enemyLayer;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
     // Update is called once per frame
@@ -91,4 +95,5 @@ public class DeamonScript : MonoBehaviour
             }
         }
     }
+
 }
