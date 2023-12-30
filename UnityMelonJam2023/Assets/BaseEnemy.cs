@@ -92,8 +92,7 @@ public class BaseEnemy : MonoBehaviour
 
                     alertLevel = 0;
                     aiState = EnemyBehaviorState.CHASE;
-                    chasePositionUpdate = 0f;
-                    pathToLastSeeonChasePos = Pathfinding.GetPath(transform.position, chaseTarget.position);
+                    GetNewChasePath();
                     //TODO: Add alert Anim
                 }
                 break;
@@ -101,40 +100,69 @@ public class BaseEnemy : MonoBehaviour
             case EnemyBehaviorState.CHASE:
                 chasePositionUpdate -= Time.deltaTime;
 
-                fov.SetAimDirection(((Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition - transform.position).normalized);
-
-                transform.position = Vector3.MoveTowards(this.transform.position, (Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition, Time.deltaTime * speed);
-                
-                if (chasePositionUpdate <= 0) 
+                if (chaseTarget != null)
                 {
-                    pathToSeenPlayer = 0;
+                    if (Vector3.Distance(transform.position, chaseTarget.position) <= 1f)
+                    {
+                        if (chaseTarget == DeamonScript.Instance.transform) 
+                        {
+                            StunEnemy(DeamonScript.Instance.StunTime);
+                        }
+                        else 
+                        {
+                            Time.timeScale = 0;
+                            Debug.LogWarning("Player ded boyyyyyy");
+                        }
+                        return;
+                    }
+                }
+
+                if (chasePositionUpdate <= 0)
+                {
                     chasePositionUpdate = chaseTargetPositionUpdates;
 
-                    if (chaseTarget != null) 
+                    if (chaseTarget != null)
                     {
-                        pathToLastSeeonChasePos = Pathfinding.GetPath(transform.position, chaseTarget.position);
+                        GetNewChasePath();
                     }
 
                 }
 
-                if (ReachedChaseWaypoint()) 
+                if (ReachedChaseWaypoint())
                 {
-                    if (chaseTarget?.position == transform.position)
-                    {
-                        Debug.LogWarning(" u ded bro");
-                        return;
-                    }
 
-                    if (pathToSeenPlayer >= pathToLastSeeonChasePos.Count) 
+                    if (pathToSeenPlayer >= pathToLastSeeonChasePos.Count -1)
                     {
+                        if (chaseTarget != null ) 
+                        {
+                            GetNewChasePath();
+                            return;
+                        }
+                        
                         stunned = true;
                         StartCoroutine(WaitBeforePlayerEscape());
+                    
                     }
-                    else 
+                    else
                     {
                         pathToSeenPlayer++;
                     }
                 }
+
+                Debug.Log(pathToLastSeeonChasePos.Count);
+
+                if (chaseTarget != null) 
+                {
+                    fov.SetAimDirection((chaseTarget.position - transform.position).normalized);
+                }
+                else 
+                {
+                    fov.SetAimDirection(((Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition - transform.position).normalized);
+                }
+
+
+                transform.position = Vector3.MoveTowards(this.transform.position, (Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition, Time.deltaTime * speed);
+
 
                 break;
 
@@ -143,9 +171,28 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
+    protected void GetNewChasePath() 
+    {
+        pathToSeenPlayer = 0;
+        pathToLastSeeonChasePos = Pathfinding.GetPath(transform.position, chaseTarget.position);
+        
+        if (pathToLastSeeonChasePos.Count > 1) 
+        {
+            pathToLastSeeonChasePos.RemoveAt(0);
+        }
+        
+        if (pathToLastSeeonChasePos == null) Debug.Log("Why the fuck you null bro???");
+    }
     public void OnFindingChaseTarget(FieldOfView.DETECTIONTYPE detectedThing) 
     {
-        aiState = EnemyBehaviorState.ALERT;
+        if (aiState != EnemyBehaviorState.CHASE) 
+        {
+            aiState = EnemyBehaviorState.ALERT;
+        }
+        else 
+        {
+            GetNewChasePath();
+        }
 
         if (detectedThing == FieldOfView.DETECTIONTYPE.PLAYER && (chaseTarget != DeamonScript.Instance.transform || DeamonScript.Instance.IsbeingChased))
         {
@@ -166,6 +213,19 @@ public class BaseEnemy : MonoBehaviour
         chaseTarget = null;
     }
 
+    public void AlertEnemyTo( Transform alertToObject) 
+    {
+        chaseTarget = alertToObject;
+        aiState = EnemyBehaviorState.CHASE;
+        chasePositionUpdate = 0f;
+        pathToLastSeeonChasePos = Pathfinding.GetPath(transform.position, chaseTarget.position);
+    }
+    public void AlertEnemyToPoint(Vector3 point) 
+    {
+        aiState = EnemyBehaviorState.CHASE;
+        chasePositionUpdate = 0f;
+        pathToLastSeeonChasePos = Pathfinding.GetPath(transform.position, point);
+    }
     protected bool ReachedWaypoint() 
     {
         return transform.position == (Vector3Int)pathfindingNodes[currentWaypoint].OldPosition;
@@ -211,6 +271,7 @@ public class BaseEnemy : MonoBehaviour
     private IEnumerator WaitBeforePlayerEscape() 
     {
         yield return new WaitForSeconds(3f);
+        stunned = false;
         aiState = EnemyBehaviorState.WANDER;
     }
 
