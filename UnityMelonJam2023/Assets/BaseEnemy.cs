@@ -26,6 +26,9 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField]
     protected EnemyBehaviorState aiState;
 
+    [SerializeField]
+    protected Animator ExpressionAnimator;
+    
     protected List<NodeBase> pathfindingNodes;
     protected int pathfindingProgress = 0;
     
@@ -88,6 +91,7 @@ public class BaseEnemy : MonoBehaviour
                 {
                     if (chaseTarget == null) 
                     {
+                        ExpressionAnimator.SetTrigger("None");
                         aiState = EnemyBehaviorState.WANDER;
                         alertLevel = 0;
                         return;
@@ -191,6 +195,7 @@ public class BaseEnemy : MonoBehaviour
         if (aiState != EnemyBehaviorState.CHASE) 
         {
             aiState = EnemyBehaviorState.ALERT;
+            ExpressionAnimator.SetTrigger("QuestionMark");
         }
         else 
         {
@@ -265,8 +270,10 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    public void StunEnemy(float stunTime) 
+    public void StunEnemy(float stunTime)   
     {
+        ExpressionAnimator.SetTrigger("Hearth");
+        ExpressionAnimator.SetTrigger("None");
         StopCoroutine(WaitForStun(stunTime));
         StartCoroutine(WaitForStun(stunTime));
     }
@@ -276,6 +283,7 @@ public class BaseEnemy : MonoBehaviour
         yield return new WaitForSeconds(3f);
         stunned = false;
         aiState = EnemyBehaviorState.WANDER;
+        ExpressionAnimator.SetTrigger("None");
     }
 
     private IEnumerator WaitForStun(float stunTime) 
