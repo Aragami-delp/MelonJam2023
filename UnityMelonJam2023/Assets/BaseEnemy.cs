@@ -68,6 +68,13 @@ public class BaseEnemy : MonoBehaviour
     protected virtual void Update()
     {
         fov.SetOrigin(transform.position);
+        
+        if (Vector3.Distance(transform.position, DeamonScript.Instance.transform.position) <= 2f)
+        {
+            
+            StunEnemy(DeamonScript.Instance.StunTime);
+
+        }
 
         if (stunned) return;
 
@@ -156,7 +163,6 @@ public class BaseEnemy : MonoBehaviour
                     }
                 }
 
-                Debug.Log(pathToLastSeeonChasePos.Count);
 
                 if (chaseTarget != null) 
                 {
@@ -199,7 +205,7 @@ public class BaseEnemy : MonoBehaviour
         }
         else 
         {
-            GetNewChasePath();
+            //GetNewChasePath();
         }
 
         if (detectedThing == FieldOfView.DETECTIONTYPE.PLAYER && (chaseTarget != DeamonScript.Instance.transform || DeamonScript.Instance.IsbeingChased))
@@ -219,6 +225,7 @@ public class BaseEnemy : MonoBehaviour
             DeamonScript.Instance.IsbeingChased = false;
         }
         chaseTarget = null;
+        Debug.LogWarning("target yeetus");
     }
 
     public void AlertEnemyTo( Transform alertToObject) 
@@ -270,12 +277,15 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    public void StunEnemy(float stunTime)   
-    {
-        ExpressionAnimator.SetTrigger("Hearth");
-        ExpressionAnimator.SetTrigger("None");
-        StopCoroutine(WaitForStun(stunTime));
-        StartCoroutine(WaitForStun(stunTime));
+    Coroutine stunBoy;
+    public void StunEnemy(float stunTime)
+    { 
+        if (stunBoy != null) 
+        {
+            StopCoroutine(stunBoy);
+        }
+
+        stunBoy = StartCoroutine(WaitForStun(stunTime));
     }
 
     private IEnumerator WaitBeforePlayerEscape() 
@@ -288,10 +298,14 @@ public class BaseEnemy : MonoBehaviour
 
     private IEnumerator WaitForStun(float stunTime) 
     {
+        
+        fov.ShowFOV = false;
         stunned = true;
         yield return new WaitForSeconds(stunTime);
+        Debug.LogWarning("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
         stunned = false;
         aiState = EnemyBehaviorState.WANDER;
+        fov.ShowFOV = true;
     }
     public enum EnemyBehaviorState 
     { 

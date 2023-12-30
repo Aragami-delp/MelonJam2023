@@ -48,11 +48,17 @@ public class DoorControlls : MonoInteractionTarget
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        OpenDoor();
+        if (proximityOpen) 
+        {
+            OpenDoor();
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        CloseDoor();
+        if (proximityOpen)
+        {
+            CloseDoor();
+        }
     }
 
     private void OnDrawGizmos()
