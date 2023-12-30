@@ -280,5 +280,10 @@ public class NodeBase
     public int F => GCost + HCost;
 
     public bool CanWalkOver;
+
+    public Vector2 GetCorrectPosition()
+    {
+        return new Vector2(OldPosition.x + 0.7f, OldPosition.y + 0.7f);
+    }
 }
 

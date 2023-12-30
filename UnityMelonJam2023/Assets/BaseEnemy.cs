@@ -68,8 +68,8 @@ public class BaseEnemy : MonoBehaviour
         switch (aiState) 
         {
             case EnemyBehaviorState.WANDER:
-                fov.SetAimDirection(((Vector3Int)pathfindingNodes[currentWaypoint].OldPosition - transform.position).normalized);
-                transform.position = Vector3.MoveTowards(this.transform.position, (Vector3Int)pathfindingNodes[currentWaypoint].OldPosition, Time.deltaTime * speed);
+                fov.SetAimDirection(((Vector3)pathfindingNodes[currentWaypoint].GetCorrectPosition() - transform.position).normalized);
+                transform.position = Vector3.MoveTowards(this.transform.position, pathfindingNodes[currentWaypoint].GetCorrectPosition(), Time.deltaTime * speed);
                 if (ReachedWaypoint())
                 {
                     currentWaypoint = (currentWaypoint + 1 >= pathfindingNodes.Count) ? 0 : currentWaypoint + 1;
@@ -157,11 +157,11 @@ public class BaseEnemy : MonoBehaviour
                 }
                 else 
                 {
-                    fov.SetAimDirection(((Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition - transform.position).normalized);
+                    fov.SetAimDirection(((Vector3)pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition() - transform.position).normalized);
                 }
 
 
-                transform.position = Vector3.MoveTowards(this.transform.position, (Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition, Time.deltaTime * speed);
+                transform.position = Vector3.MoveTowards(this.transform.position,pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition(), Time.deltaTime * speed);
 
 
                 break;
@@ -228,11 +228,11 @@ public class BaseEnemy : MonoBehaviour
     }
     protected bool ReachedWaypoint() 
     {
-        return transform.position == (Vector3Int)pathfindingNodes[currentWaypoint].OldPosition;
+        return transform.position == (Vector3) pathfindingNodes[currentWaypoint].GetCorrectPosition();
     }
     protected bool ReachedChaseWaypoint()
     {
-        return transform.position == (Vector3Int)pathToLastSeeonChasePos[pathToSeenPlayer].OldPosition;
+        return transform.position == (Vector3) pathToLastSeeonChasePos[pathToSeenPlayer].GetCorrectPosition();
     }
     public void AddWaypoint() 
     {
