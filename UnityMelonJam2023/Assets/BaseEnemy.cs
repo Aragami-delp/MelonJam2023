@@ -19,7 +19,8 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     [SerializeField]
     protected float speed = 5,chaseSpeed = 7;
 
-
+    [SerializeField]
+    protected bool loopToBeginning;
     [SerializeField]
     protected float timeUntillChase = 2f;
 
@@ -57,15 +58,16 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         {
             Waypoints.Add(Waypoints.First());
         }
-        
-        pathfindingNodes = Pathfinding.GetPath(Waypoints[0].position, Waypoints[1].position);
 
-        for (int i = 2; i < Waypoints.Count; i++)
+        if (loopToBeginning) 
         {
-            pathfindingNodes.AddRange(Pathfinding.GetPath(Waypoints[i - 1].position, Waypoints[i].position));
+            GetPathfindingLoop();
+        }
+        else 
+        {
+            GetPathfindingLinear();
         }
 
-        pathfindingNodes.AddRange(Enumerable.Reverse<NodeBase>(pathfindingNodes));
 
         foreach (Transform point in Waypoints)
         {
@@ -241,6 +243,29 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
         Debug.LogWarning("target yeetus");
     }
 
+    private void GetPathfindingLinear()
+    {
+        pathfindingNodes = Pathfinding.GetPath(Waypoints[0].position, Waypoints[1].position);
+
+        for (int i = 2; i < Waypoints.Count; i++)
+        {
+            pathfindingNodes.AddRange(Pathfinding.GetPath(Waypoints[i - 1].position, Waypoints[i].position));
+        }
+
+        pathfindingNodes.AddRange(Enumerable.Reverse<NodeBase>(pathfindingNodes));
+    }
+
+    private void GetPathfindingLoop() 
+    {
+        pathfindingNodes = Pathfinding.GetPath(Waypoints[0].position, Waypoints[1].position);
+
+        for (int i = 2; i < Waypoints.Count; i++)
+        {
+            pathfindingNodes.AddRange(Pathfinding.GetPath(Waypoints[i - 1].position, Waypoints[i].position));
+        }
+
+        Pathfinding.GetPath(Waypoints[Waypoints.Count -1].position, Waypoints[0].position);
+    }
     private void PlayExpression(string play) 
     {
         switch (play) 
