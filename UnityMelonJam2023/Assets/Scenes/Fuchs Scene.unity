@@ -807,29 +807,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2054264946606470166, guid: a3016dc7f83ba504bb110f70d12e3e52, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: be603bea1114d824ab2520a95edd7a9e, type: 3}
     - target: {fileID: 6324241284071651286, guid: a3016dc7f83ba504bb110f70d12e3e52, type: 3}
       propertyPath: m_Name
       value: Enemy static (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6573360098405012296, guid: a3016dc7f83ba504bb110f70d12e3e52, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6573360098405012296, guid: a3016dc7f83ba504bb110f70d12e3e52, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 6970404303495584701, guid: a3016dc7f83ba504bb110f70d12e3e52, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6970404303495584701, guid: a3016dc7f83ba504bb110f70d12e3e52, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
