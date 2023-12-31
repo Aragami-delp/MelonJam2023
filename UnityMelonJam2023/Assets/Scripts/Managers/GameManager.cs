@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
             {
                 if (!_audioSources[audioType].isPlaying)
                 {
+                    _audioSources[audioType].Stop();
                     _audioSources[audioType].Play();
                 }
             }
