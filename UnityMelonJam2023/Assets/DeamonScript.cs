@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -107,6 +106,7 @@ public class DeamonScript : MonoBehaviour
 
     public void Fire(InputAction.CallbackContext context)
     {
+        Debug.Log("Click Event");
         if (context.started)
         {
 

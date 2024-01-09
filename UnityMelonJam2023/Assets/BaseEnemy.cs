@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using System.Linq;
 using System;
@@ -508,6 +510,7 @@ public class BaseEnemy : MonoBehaviour, IHideOutOfView
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(BaseEnemy))]
 public class BaseEnemyEditor : Editor
 {
@@ -523,3 +526,4 @@ public class BaseEnemyEditor : Editor
         }
     }
 }
+#endif

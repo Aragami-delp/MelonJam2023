@@ -38,6 +38,7 @@ public class PlayerInputMessages : MonoBehaviour
         if (context.started)
         {
             _interaction?.UseInteract(0);
+            DeamonScript.Instance?.Fire(context);
         }
     }
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class DoorControlls : MonoInteractionTarget
@@ -198,6 +200,8 @@ public class DoorControlls : MonoInteractionTarget
         }
     }
 }
+
+#if UNITY_EDITOR
 [CustomEditor(typeof(DoorControlls))]
 public class DoorControllsEditor : Editor
 {
@@ -223,3 +227,4 @@ public class DoorControllsEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
